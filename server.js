@@ -1,36 +1,16 @@
-const http = require('http'),
-    fs = require('fs'),
-    url = require('url');
+const http = require('http');
+url = require('url');
 
 http.createServer((request, response) => {
-    let addr = request.url,
-        q = url.parse(addr, true),
-        filePath = '';
-
-    fs.appendFile('log.txt', 'URL: ' + addr + '\nTimestamp: ' + new Date() + '\n\n', (err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Added to log.');
-        }
-    });
-
-    if (q.pathname.includes('documentation')) {
-        filePath = (__dirname + '/documentation.html');
+    let requestUrl = url.parse(request.url, true);
+    if (requestUrl.pathname == '/documentation.html') {
+        response.writeHead(200, { 'Content-Type': 'text/plain' });
+        response.end('Documentation on the book club API .\n');
     } else {
-        filePath = 'index.html';
+        response.writeHead(200, { 'Content-Type': 'text/plain' });
+        response.end('Welcome to my book club! \n');
     }
-
-    fs.readFile(filePath, (err, data) => {
-        if (err) {
-            throw err;
-        }
-
-        response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.write(data);
-        response.end();
-
-    });
-
 }).listen(8080);
-console.log('My test server is running on Port 8080.');
+
+
+console.log('My first Node test server is running on Port 8080.');
