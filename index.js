@@ -114,7 +114,7 @@ let topMovies = [{
 
 
 app.use(morgan('common'));
-app.use(express.static('public/documentation'));
+app.use(express.static('public/documentation.html'));
 
 // GET requests //////////////////////////////////
 app.get('/', (req, res) => {
