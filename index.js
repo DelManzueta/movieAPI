@@ -1,25 +1,18 @@
 const { response } = require('express');
-const morgan = require('morgan');
-
-const express = require('express'),
-    app = express(),
+const morgan = require('morgan'),
+    express = require('express'),
     http = require('http'),
-    url = require('url');
+    url = require('url'),
+    bodyParser = require('body-parser'),
+    uuid = require('uuid');
+
+const app = express();
+app.use(bodyParser.json());
+app.use(morgan('common'));
+app.use(express.static('public/documentation.html'));
 
 
-
-// http.createServer((req, res) => {
-//     let requestUrl = url.parse(req.url, true);
-//     if (requestUrl.pathname == '/documentation.html') {
-//         response.writeHead(200, { 'Content-Type': 'text/plain' });
-//         response.end('Documentation on the Movie API.\n');
-//     } else {
-//         response.writeHead(200, { 'Content-Type': 'text/plain' });
-//         response.end('Welcome to my book club!\n');
-//     }
-// }).listen(8080);
-
-let topMovies = [{
+let movies = [{
         id: 1,
         title: '12 Angry Men',
         director: 'Sidney Lumet',
@@ -113,20 +106,25 @@ let topMovies = [{
 ];
 
 
-app.use(morgan('common'));
-app.use(express.static('public/documentation.html'));
 
-// GET requests //////////////////////////////////
+// GET requests //
+
 app.get('/', (req, res) => {
     res.send('Welcome to myFlix')
 });
 
 app.get('/documentation', (req, res) => {
-    res.sendFile('public', { root: __dirname });
+    res.sendFile('/public', { root: __dirname });
 });
 
 app.get('/movies', (req, res) => {
-    res.json(topMovies);
+    res.json(movies);
+});
+
+app.get('/movies/:titles', (req, res) => {
+    res.json(movies.find((title) => {
+        return movies.title === req.params.title
+    }));
 });
 
 
