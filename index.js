@@ -7,18 +7,6 @@ const express = require('express'),
     url = require('url');
 
 
-
-// http.createServer((req, res) => {
-//     let requestUrl = url.parse(req.url, true);
-//     if (requestUrl.pathname == '/documentation.html') {
-//         response.writeHead(200, { 'Content-Type': 'text/plain' });
-//         response.end('Documentation on the Movie API.\n');
-//     } else {
-//         response.writeHead(200, { 'Content-Type': 'text/plain' });
-//         response.end('Welcome to my book club!\n');
-//     }
-// }).listen(8080);
-
 let topMovies = [{
         id: 1,
         title: '12 Angry Men',
