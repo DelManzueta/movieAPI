@@ -125,6 +125,11 @@ app.get('/movies', (req, res) => {
     res.json(movies);
 });
 
+app.get('/movies/:title', (req, res) => {
+    res.send(movies.title);
+
+});
+
 
 // express error handling
 app.use(function(err, req, res, next) {
