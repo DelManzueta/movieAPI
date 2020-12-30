@@ -154,7 +154,6 @@ app.delete('/users/:id', (req, res) => {
     res.status(201).send('This account has been deleted.');
 });
 
-
 // express error handling //////////////////////////////////////////////////
 app.use(function(err, req, res, next) {
     console.error(err.stack),
