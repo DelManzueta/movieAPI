@@ -117,12 +117,15 @@ app.get('/movies', (req, res) => {
 app.get('/movies/:titles/', (req, res) => {
     res.send('Single Movie Title and Genre')
 });
-app.get('/movies/:titles/:genre', (req, res) => {
-    res.send('Movie Genres');
+app.get('/movies/:titles/:directors', (req, res) => {
+    res.send('Movie Directors');
 });
-app.get('movies/:titles/:genre/:director/Name', (req, res) => {
-    res.send('Bio about your favorite director.');
+app.get('/movies/:titles/:directors/:genres', (req, res) => {
+    res.send('Movies by Genre');
 });
+app.get('/users', (req, res) => {
+    res.send('User welcome page')
+})
 
 // POST Requests //////////////////////////////////////////////////
 app.post('/users', (req, res) => {
