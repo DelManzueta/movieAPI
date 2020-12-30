@@ -117,8 +117,12 @@ app.get('/documentation', (req, res) => {
     res.sendFile('/public', { root: __dirname });
 });
 
-app.get('/movies', (req, res) => {
+app.get('/movies', (req, res) => { // get movies list
     res.json(movies);
+});
+app.get('/titles', (req, res) => { // get titles list
+    res.json(movies.titles);
+
 });
 
 app.get('/movies/:titles', (req, res) => {
@@ -126,6 +130,12 @@ app.get('/movies/:titles', (req, res) => {
         return movies.title === req.params.title
     }));
 });
+
+// POST requests // Use for 'User Favorites'
+
+// PUT requests //
+
+// DELETE requests // Use for 'Remove User/Delete Account'
 
 
 // express error handling
