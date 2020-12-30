@@ -1,13 +1,15 @@
 const { response } = require('express');
-const morgan = require('morgan');
+const
+    express = require('express'),
+    morgan = require('morgan');
 
-const express = require('express'),
+const
     app = express(),
     http = require('http'),
     url = require('url');
 
 
-let topMovies = [{
+let movies = [{
         id: 1,
         title: '12 Angry Men',
         director: 'Sidney Lumet',
@@ -100,7 +102,11 @@ let topMovies = [{
     },
 ];
 
-
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+app.use(methodOverride());
 app.use(morgan('common'));
 app.use(express.static('public/documentation.html'));
 
@@ -114,8 +120,9 @@ app.get('/documentation', (req, res) => {
 });
 
 app.get('/movies', (req, res) => {
-    res.json(topMovies);
+    res.json(movies);
 });
+
 
 
 // express error handling
