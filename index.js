@@ -1,8 +1,4 @@
-<< << << < Updated upstream
-    ===
-    ===
-    =
-    const { response } = require('express');
+const { response } = require('express');
 const
     express = require('express'),
     bodyParser = require('body-parser'),
@@ -14,8 +10,6 @@ const
     http = require('http'),
     url = require('url'),
     uuid = require('uuid');
-
-
 
 
 app.use(bodyParser.json());
