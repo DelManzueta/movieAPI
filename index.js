@@ -2,8 +2,8 @@ const { response } = require('express');
 const morgan = require('morgan'),
     express = require('express'),
     http = require('http'),
-    url = require('url'),
     bodyParser = require('body-parser'),
+    url = require('url'),
     uuid = require('uuid');
 
 const app = express();
@@ -16,7 +16,6 @@ let movies = [{
         id: 1,
         title: '12 Angry Men',
         director: 'Sidney Lumet',
-        mainActors: ['Henry Fonda', 'Lee J. Cobb', 'Martin Balsam'],
         genre: ['Drama', 'Crime'],
         year: '1957',
         collection: null
@@ -25,7 +24,6 @@ let movies = [{
         id: 2,
         title: 'Fight Club',
         director: 'David Fincher',
-        mainActors: ['Brad Pitt', 'Edward Norton', 'Helena Bonham Carter'],
         genre: 'Drama',
         year: '1999',
         collection: null
@@ -34,7 +32,6 @@ let movies = [{
         id: 3,
         title: 'American Pop',
         director: 'Ralph Bakshi',
-        mainActors: 'Ron Thompson',
         genre: ['Animation', 'Drama'],
         year: '1981',
         collection: null
@@ -52,7 +49,6 @@ let movies = [{
         id: 5,
         title: 'Hook',
         director: 'Steven Spielberg',
-        mainActors: ['Robin Williams', 'Dustin Hoffman', 'Julia Roberts'],
         genre: ['Adventure', 'Comedy', 'Family'],
         year: '1991',
         collection: null
@@ -61,7 +57,6 @@ let movies = [{
         id: 6,
         title: 'Dog Day Afternoon',
         director: 'Sidney Lumet',
-        mainActors: ['Al Pacino', 'John Cazale'],
         genre: ['Biography', 'Crime', 'Drama'],
         year: '1975',
         collection: null
@@ -70,7 +65,6 @@ let movies = [{
         id: 7,
         title: 'Ready Player One',
         director: 'Steven Spielberg',
-        mainActors: ['Tye Sheridan', 'Olivia Cooke', 'Ben Mendelsohn'],
         genre: ['Action', 'Adventure', 'Sci-Fi'],
         year: '2018',
         collection: null
@@ -79,7 +73,6 @@ let movies = [{
         id: 8,
         title: 'Rogue One: A Star Wars Story',
         director: 'Gareth Edwards',
-        mainActors: ['Felicity Jones', 'Diego Luna', 'Ben Mendelsohn'],
         genre: ['Action', 'Adventure', 'Sci-Fi'],
         year: '2016',
         collection: 'Star Wars'
@@ -88,8 +81,6 @@ let movies = [{
         id: 9,
         title: 'The Lord of the Rings: The Fellowship of the Ring',
         director: 'Peter Jackson',
-        author: 'J.R.R Tolkien',
-        mainActors: ['Elijah Wood', 'Ian McKellen', 'Viggo Mortensen'],
         genre: ['Action', 'Adventure', 'Fantasy'],
         year: '2001',
         collection: 'The Lord of the Rings'
@@ -98,14 +89,11 @@ let movies = [{
         id: 10,
         title: 'Carlito\'s Way',
         director: 'Brian De Palma',
-        mainActors: ['Al Pacino', 'Sean Penn', 'Viggo Mortensen'],
         year: '1993',
         genre: ['Crime', 'Drama', 'Thriller'],
         collection: null
     },
 ];
-
-
 
 // GET requests //
 
@@ -120,16 +108,20 @@ app.get('/documentation', (req, res) => {
 app.get('/movies', (req, res) => { // get movies list
     res.json(movies);
 });
-app.get('/titles', (req, res) => { // get titles list
-    res.json(movies.titles);
+
+
+/*
+app.get('/movies/:titles', (req, res) => { // get titles list
+    res.json(movies.title);
 
 });
 
-app.get('/movies/:titles', (req, res) => {
+app.get('/movies/titles/', (req, res) => {
     res.json(movies.find((title) => {
         return movies.title === req.params.title
     }));
 });
+*/
 
 // POST requests // Use for 'User Favorites'
 
