@@ -1,6 +1,8 @@
 const { response } = require('express');
 const
     express = require('express'),
+    bodyParser = require('body-parser'),
+    methodOverride = require('method-override'),
     morgan = require('morgan');
 
 const
@@ -102,10 +104,10 @@ let movies = [{
     },
 ];
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(morgan('common'));
 app.use(express.static('public/documentation.html'));
@@ -124,13 +126,11 @@ app.get('/movies', (req, res) => {
 });
 
 
-
 // express error handling
 app.use(function(err, req, res, next) {
     console.error(err.stack),
         res.status(500).send('Try Again')
 })
-
 
 // listen for requests //////////////////////////////////
 app.listen(8080, () => {
