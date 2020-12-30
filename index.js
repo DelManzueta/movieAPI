@@ -125,9 +125,17 @@ app.get('/movies', (req, res) => {
     res.json(movies);
 });
 
-app.get('/movies/:title', (req, res) => {
-    res.send(movies.title);
-
+app.get('/movies/:titles', (req, res) => {
+    res.send('Movies by Title')
+});
+app.get('/movies/:titles/:directors', (req, res) => {
+    res.send('Movie Directors');
+});
+app.get('/movies/:titles/:directors/:genres', (req, res) => {
+    res.send('Movies by Genre');
+});
+app.get('/movies/:users', (req, res) => {
+    res.send('User Homepage');
 });
 
 
