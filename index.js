@@ -1,161 +1,198 @@
 const { response } = require('express');
 const
     express = require('express'),
+    morgan = require('morgan'),
+    app = express(),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
-    morgan = require('morgan');
-
-const
-    app = express(),
-    http = require('http'),
-    url = require('url'),
     uuid = require('uuid');
 
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(methodOverride());
-app.use(morgan('common'));
-app.use(express.static('public/documentation.html'));
+
 
 let movies = [{
         id: 1,
-        title: '12 Angry Men',
-        director: 'Sidney Lumet',
-        genre: ['Drama', 'Crime'],
-        year: '1957',
-        collection: null
+        title: 'Star Wars: Episode IV - A New Hope',
+        director: 'George Lucas',
+        year: '1972',
+        genre: ['Adventure', 'Fantasy', 'Sci-Fi']
     },
     {
         id: 2,
         title: 'Fight Club',
         director: 'David Fincher',
-        genre: 'Drama',
         year: '1999',
-        collection: null
+        genre: ['Action', 'Drama']
     },
     {
         id: 3,
-        title: 'American Pop',
-        director: 'Ralph Bakshi',
-        genre: ['Animation', 'Drama'],
-        year: '1981',
-        collection: null
+        title: 'The Animatrix',
+        director: ['Peter Chung', 'Andrew R. Jones'],
+        year: '2003',
+        genre: ['Animation', ' Action', ' Adventure']
     },
     {
         id: 4,
-        title: 'The Wiz',
-        director: 'Sindey Lumet',
-        genre: ['Adventure', 'Family', 'Fantasy'],
-        year: '1978',
-        collection: null
+        title: 'Akira',
+        director: 'SKatsuhiro Ôtomo',
+        year: '1988',
+        genre: ['Animation', 'Action', 'Sci-Fi']
     },
     {
         id: 5,
         title: 'Hook',
         director: 'Steven Spielberg',
-        genre: ['Adventure', 'Comedy', 'Family'],
         year: '1991',
-        collection: null
+        genre: ['Adventure', 'Comedy', 'Family']
     },
     {
         id: 6,
-        title: 'Dog Day Afternoon',
-        director: 'Sidney Lumet',
-        genre: ['Biography', 'Crime', 'Drama'],
-        year: '1975',
-        collection: null
+        title: 'Man of Steel',
+        director: 'Zack Snyder',
+        year: '2013',
+        genre: ['Action', 'Adventure', 'Sci-Fi']
     },
     {
         id: 7,
         title: 'Ready Player One',
         director: 'Steven Spielberg',
-        genre: ['Action', 'Adventure', 'Sci-Fi'],
         year: '2018',
-        collection: null
+        genre: ['Action', 'Adventure', 'Sci-Fi']
     },
     {
         id: 8,
-        title: 'Rogue One: A Star Wars Story',
-        director: 'Gareth Edwards',
-        genre: ['Action', 'Adventure', 'Sci-Fi'],
-        year: '2016',
-        collection: 'Star Wars'
+        title: 'Field of Dreams',
+        director: 'Phil Alden Robinson',
+        year: '1989',
+        genre: ['Drama', 'Family', 'Fantasy']
     },
     {
         id: 9,
-        title: 'The Lord of the Rings: The Fellowship of the Ring',
+        title: 'Batman',
         director: 'Peter Jackson',
-        author: 'J.R.R Tolkien',
-        genre: ['Action', 'Adventure', 'Fantasy'],
-        year: '2001',
-        collection: 'The Lord of the Rings'
+        year: '1989',
+        genre: ['Action', 'Adventure', 'Fantasy']
     },
     {
         id: 10,
         title: 'Carlito\'s Way',
         director: 'Brian De Palma',
         year: '1993',
-        genre: ['Crime', 'Drama', 'Thriller'],
-        collection: null
+        genre: ['Crime', 'Drama', 'Thriller']
     },
+
 ];
 
-// GET Requests //////////////////////////////////////////////////
 
-app.get('/', (req, res) => {
-    res.send('Welcome to myFlix')
-});
-app.get('/documentation', (req, res) => {
-    res.sendFile('public/documentation.html', { root: __dirname });
-});
+//get list of data of all movies
 app.get('/movies', (req, res) => {
     res.json(movies);
 });
-app.get('/movies/:titles/', (req, res) => {
-    res.send('Single Movie Title and Genre')
+
+
+
+//get data about a single movie by name
+app.get('movies/:title', (req, res) => {
+    res.json(
+        movies.find((movies) => {
+            return movies.name === req.params.name
+        })
+    )
 });
-app.get('/movies/:titles/:directors', (req, res) => {
+
+
+//add a new movie to the list
+app.post('/movies', (req, res) => {
+    let newMovie = req.body
+    if (!newMovie.name) {
+        const message = 'Missing Movie Ttile'
+        res.status(400).send(message)
+    } else {
+        newMovie.id = uuid.v11()
+        movies.push(newMovie)
+        res.status(201).send(newMovie)
+    }
+});
+
+
+app.use(morgan('common'))
+app.use('/', express.static('public'));
+app.use(express.static('public'));
+
+
+//home page
+app.get('/', (req, res) => {
+    res.send('Welcome to myFlix')
+});
+
+app.get('/secreturl', (req, res) => {
+    res.send('This is a secret URL')
+});
+
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    })
+);
+
+app.use(bodyParser.json());
+app.use(methodOverride());
+
+
+// GET Requests //////////////////////////////////////////////////
+
+app.get('/public', (req, res) => {
+    res.sendFile('public/documentation.html', { root: __dirname });
+});
+app.get('/movies/:title/:directors', (req, res) => {
     res.send('Movie Directors');
 });
-app.get('/movies/:titles/:directors/:genres', (req, res) => {
+app.get('/movies/:title/:directors/:genres', (req, res) => {
     res.send('Movies by Genre');
 });
+
+
 app.get('/users', (req, res) => {
     res.send('User welcome page')
-})
+});
+
+app.get('/users/:accounts', (req, res) => {
+    res.send('User Profile Page')
+});
 
 // POST Requests //////////////////////////////////////////////////
 app.post('/users', (req, res) => {
-    let newuser = req.body;
-    if (!newuser.name) {
-        const message = 'Missing name in request body';
+    let newUser = req.body;
+    if (!newUser.name) {
+        const message = 'Missing User Name';
         res.status(400).send(message);
     } else {
-        newuser.id = uuid.v4();
-        res.status(201).send(newuser);
+        newUser.id = uuid.v11();
+        movies.push(newUser);
+        res.status(201).send(newUser);
     }
 });
 
 // PUT Requests //////////////////////////////////////////////////
-app.put('/users/:account', (req, res) => {
+app.put('/users/:accounts', (req, res) => {
     let update = req.body;
     res.status(201).send(update);
 });
-app.put('/users/:account/:favorites/:name', (req, res) => {
+app.put('/users/:accounts/:favorites/:name', (req, res) => {
     let update = req.body;
     res.status(201).send(update);
 });
 
 // DELETE Requests //////////////////////////////////////////////////
-app.delete('/users/:account/:favorite/:name', (req, res) => {
+app.delete('/users/:accounts/:favorite/:name', (req, res) => {
     res.status(201).send('This movie has been removed');
 });
 app.delete('/users/:id', (req, res) => {
     res.status(201).send('This account has been deleted.');
 });
+
+
+
 
 // express error handling //////////////////////////////////////////////////
 app.use(function(err, req, res, next) {
