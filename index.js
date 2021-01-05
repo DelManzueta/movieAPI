@@ -102,17 +102,14 @@ app.get('/movies/:title', (req, res) => {
         })
     )
 });
-
-
 //data about a single director
 app.get('/movies/:title/:directors', (req, res) => {
+
     res.json(
         movies.find((director) => {
             return director.name === req.params.name
         }))
 });
-
-
 //get data about a single genre
 app.get('/movies/:title/:directors/:genres', (req, res) => {
     res.json(
@@ -121,8 +118,6 @@ app.get('/movies/:title/:directors/:genres', (req, res) => {
         })
     )
 });
-
-
 
 //add a new movie to the list
 app.post('/movies', (req, res) => {
