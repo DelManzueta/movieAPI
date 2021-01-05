@@ -90,12 +90,11 @@ app.get('/movies', (req, res) => {
 });
 
 
-
-//get data about a single movie by name
-app.get('movies/:title', (req, res) => {
+//get data about a single movie by title
+app.get('/movies/:title', (req, res) => {
     res.json(
-        movies.find((movies) => {
-            return movies.name === req.params.name
+        movies.find((title) => {
+            return title.name === req.params.name
         })
     )
 });
