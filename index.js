@@ -83,6 +83,10 @@ let movies = [{
 
 ];
 
+//public documentation
+app.get('/public', (req, res) => {
+    res.sendFile('public/documentation.html', { root: __dirname });
+});
 
 //get list of data of all movies
 app.get('/movies', (req, res) => {
@@ -98,6 +102,26 @@ app.get('/movies/:title', (req, res) => {
         })
     )
 });
+
+
+//data about a single director
+app.get('/movies/:title/:directors', (req, res) => {
+    res.json(
+        movies.find((director) => {
+            return director.name === req.params.name
+        }))
+});
+
+
+//get data about a single genre
+app.get('/movies/:title/:directors/:genres', (req, res) => {
+    res.json(
+        movies.find((genre) => {
+            return genre.name === req.params.name
+        })
+    )
+});
+
 
 
 //add a new movie to the list
@@ -138,19 +162,7 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 
-// GET Requests //////////////////////////////////////////////////
-
-app.get('/public', (req, res) => {
-    res.sendFile('public/documentation.html', { root: __dirname });
-});
-app.get('/movies/:title/:directors', (req, res) => {
-    res.send('Movie Directors');
-});
-app.get('/movies/:title/:directors/:genres', (req, res) => {
-    res.send('Movies by Genre');
-});
-
-
+// User //////////////////////////////////////////////////
 app.get('/users', (req, res) => {
     res.send('User welcome page')
 });
