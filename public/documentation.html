@@ -143,19 +143,21 @@
                                 <p>A JSON object holding data about all the movies</p>
                                 <p class="text-warning">
 
-                                    app.get('/movies', (req, res) =><br>{ res.json(movies);<br>});
+                                    app.get('/movies/:title', (req, res) => {<br>res.json(<br>movies.find((value1) => {<br>return value1.title === req.params.title<br>})<br>)<br>});<br>
                                 </p>
                             </td>
 
                         </tr>
                         <tr>
                             <td>Return data about a single movie by title to the user</td>
-                            <td>/movies/:titles</td>
+                            <td>/movies/:title</td>
                             <td>GET</td>
                             <td>None</td>
                             <td>
                                 <p>A JSON object holding data about a single Movie containing an ID, name, and classes property.</p>
-                                <p class="text-warning">app.get('/movies/:titles/', (req, res) => {<br> res.send('Single Movie Title and Genre')<br> });
+                                <p class="text-warning">
+
+                                    app.get('/movies/:title', (req, res) => {<br>res.json(<br>movies.find((value1) => {<br>return value1.title === req.params.title<br>})<br>)<br>});<br>
                                 </p>
                             </td>
 
