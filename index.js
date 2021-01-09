@@ -114,6 +114,20 @@
      }))
  });
 
+ // adds data for a new movie to our list of movies
+ app.post('/movies', (req, res) => {
+     let newMovie = req.body;
+
+     if (!newMovie.title) {
+         const message = 'Missing "This Name" in request body';
+         res.status(400).send(message);
+     } else {
+         newMovie.id = uuid.v4();
+         movies.push(newMovie);
+         res.status(201).send(newMovie);
+     }
+ });
+
  // POST new user
  app.post('/users', (req, res) => {
      res.send('Successful request for New User')

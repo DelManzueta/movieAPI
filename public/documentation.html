@@ -145,8 +145,8 @@
                             <td>Get a list of movies</td>
                             <td>/movies</td>
                             <td>GET</td>
-                            <td>Lorem Ipsum</td>
-                            <td></td>
+                            <td>None</td>
+                            <td>A JSON object holding data of all the movies</td>
                         </tr>
                         <tr>
                             <td>Get data about a movie by title</td>
@@ -161,6 +161,23 @@
                             <td>GET</td>
                             <td>Lorem Ipsum</td>
                             <td></td>
+                        </tr>
+                        <tr>
+                            <td>Adds data for a new movie to list of movies</td>
+                            <td>/movies</td>
+                            <td>POST</td>
+                            <td>
+                                <p>A JSON object holding data about the movie to add:</p>
+                                <p class="text-warning">{<br>title: 'Spider-Man',<br>director: 'Sam Raimi',<br>year: 2002,<br>genre:<br>[ 'Action,<br>'Adventure',<br>'Sci-Fi'<br> ]<br> }
+                                </p>
+                            </td>
+                            <td>
+                                <p>A JSON object holding data about the movie that was added, including an ID:</p>
+                                <p>
+                                    <p class="text-warning">{<br>id: 11,<br>title: 'Spider-Man',<br>director: 'Sam Raimi',<br>year: 2002,<br>genre:<br>[ 'Action,<br>'Adventure',<br>'Sci-Fi'<br> ]<br> }
+                                    </p>
+                                </p>
+                            </td>
                         </tr>
                         <tr>
                             <td>Add new user</td>
