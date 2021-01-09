@@ -134,13 +134,7 @@
                             <th>Request body data format</th>
                             <th>Response body data format</th>
                         </tr>
-                        <tr>
-                            <td>Public Documentation</td>
-                            <td>/public/documentation.html</td>
-                            <td>GET</td>
-                            <td>Lorem Ipsum</td>
-                            <td></td>
-                        </tr>
+
                         <tr>
                             <td>Get a list of movies</td>
                             <td>/movies</td>
@@ -150,10 +144,23 @@
                         </tr>
                         <tr>
                             <td>Get data about a movie by title</td>
-                            <td>/movies/:title</td>
+                            <td>/movies/[Title]</td>
                             <td>GET</td>
-                            <td>Lorem Ipsum</td>
-                            <td></td>
+                            <td>None</td>
+                            <td>
+                                <p>A JSON object holding data about a single movie, containing an ID, title, director, and genre property:</p>
+                                <pre class="line-numbers">
+  <code class="language-css text-warning">
+     {
+         id: 5,
+         title: 'Hook',
+         director: 'Steven Spielberg',
+         year: '1991',
+         genre: ['Adventure', 'Comedy', 'Family']
+     }
+  </code>
+</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td>Get data about a single film director</td>
@@ -168,15 +175,38 @@
                             <td>POST</td>
                             <td>
                                 <p>A JSON object holding data about the movie to add:</p>
-                                <p class="text-warning">{<br>title: 'Spider-Man',<br>director: 'Sam Raimi',<br>year: 2002,<br>genre:<br>[ 'Action,<br>'Adventure',<br>'Sci-Fi'<br> ]<br> }
-                                </p>
+                                <pre class="line-numbers">
+                                <code class="language-json text-warning">
+{
+    title: 'Spider-Man',
+    director: 'Sam Raimi',
+    year: 2002,
+    genre: [
+        'Action,
+        'Adventure',
+        'Sci-Fi'
+  ];
+}
+</code>
+                                </pre>
                             </td>
                             <td>
                                 <p>A JSON object holding data about the movie that was added, including an ID:</p>
-                                <p>
-                                    <p class="text-warning">{<br>id: 11,<br>title: 'Spider-Man',<br>director: 'Sam Raimi',<br>year: 2002,<br>genre:<br>[ 'Action,<br>'Adventure',<br>'Sci-Fi'<br> ]<br> }
-                                    </p>
-                                </p>
+                                <pre class="line-numbers">
+                                <code class="language-json text-warning">
+{
+    id: 11,
+    title: 'Spider-Man',
+    director: 'Sam Raimi',
+    year: 2002,
+    genre: [
+        'Action,
+        'Adventure',
+        'Sci-Fi'
+  ];
+}
+                                </code>
+                                </pre>
                             </td>
                         </tr>
                         <tr>

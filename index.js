@@ -22,7 +22,7 @@
          title: 'Fight Club',
          director: 'David Fincher',
          year: '1999',
-         genre: ['Action', 'Drama']
+         genre: ['Action', 'Drama', 'Fantasy']
      },
      {
          id: 3,
