@@ -135,127 +135,55 @@
                             <th>Response body data format</th>
                         </tr>
                         <tr>
+                            <td>Public Documentation</td>
+                            <td>/public/documentation.html</td>
+                            <td>GET</td>
+                            <td>Lorem Ipsum</td>
+                            <td></td>
+                        </tr>
+                        <tr>
                             <td>Get a list of movies</td>
                             <td>/movies</td>
                             <td>GET</td>
-                            <td>None</td>
-                            <td>
-                            </td>
-
+                            <td>Lorem Ipsum</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td>Get data about a movie by title</td>
                             <td>/movies/:title</td>
                             <td>GET</td>
-                            <td>None</td>
-                            <td>
-                                <p>A JSON object holding data about a single Movie containing an ID, name, and classes property.</p>
-                                <p class="text-warning">
-
-                                    app.get('/movies/:title', (req, res) => {<br>res.json(<br>movies.find((value1) => {<br>return value1.title === req.params.title<br>})<br>)<br>});<br>
-                                </p>
-                            </td>
-
+                            <td>Lorem Ipsum</td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>Get data about a single director by name</td>
+                            <td>Get data about a single film director</td>
                             <td>/movies/:title/:director</td>
                             <td>GET</td>
-                            <td>None</td>
-                            <td>
-                            </td>
-
+                            <td>Lorem Ipsum</td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>Return data about a director<br>(bio, birth year, death year) by name</td>
-                            <td>/movies/:titles/:genres/:directors/:name</td>
-                            <td>GET</td>
-                            <td>None</td>
-                            <td>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                <p class="text-warning">app.get('movies/:titles/:genre/:director/Name', (req, res) => {<br>res.send('Bio about your favorite director.');<br>});
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>A request to add a new user to the app </p>
-                            </td>
+                            <td>Add new user</td>
                             <td>/users</td>
                             <td>POST</td>
-                            <td>
-                                <p>A JSON object holding data about the new User, structured like:</p>
-                                <p class="text-warning">app.post('/users', (req, res) => {<br>let newuser = req.body;<br>if (!newuser.name) {<br>const message = 'Missing name in request body';<br>res.status(400).send(message);<br>} else {<br> newuser.id = uuid.v4();<br> res.status(201).send(newuser);<br>                                    }<br> });<br>
-                                </p>
-                            </td>
-                            <td>
-                                <p>A text response indicating succesful sign-up</p>
-                            </td>
+                            <td>Lorem Ipsum</td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>
-                                <p>Add user account &amp; info to database</p>
-                            </td>
-                            <td>/users/:account</td>
+                            <td>Update user information</td>
+                            <td>/users/:name</td>
                             <td>PUT</td>
-                            <td>
-                                <p>None</p>
-
-                            </td>
-                            <td>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                <p class="text-warning">app.put('/users/:account', (req, res) => {<br>let update = req.body;<br>res.status(201).send(update);<br>});
-
-                            </td>
+                            <td>Lorem Ipsum</td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>
-                                <p>Add movies to user 'favorites' list</p>
-                            </td>
-                            <td>/users/:account/:favorites</td>
-                            <td>PUT</td>
-                            <td>
-                                <p>None</p>
-
-                            </td>
-                            <td>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                <p class="text-warning">app.put('/users/:account/:favorites', (req, res) => {<br>let update = req.body;<br>res.status(201).send(update);<br>});
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Remove/Delete Movie from 'Favorites' List by ID</td>
-                            <td>/users/:account/:favorites/[ID]</td>
+                            <td>Delete user account by ID</td>
+                            <td>/users/:name/:id</td>
                             <td>DELETE</td>
-                            <td>None</td>
-                            <td>
-                                <p>A message indicating whether the user wassuccessfully removed</p>
-                                <p class="text-warning">app.delete('/users/:account/:favorite/:name', (req, res) => {<br>res.status(201).send('This movie has been removed');<br>});
-                                </p>
-                            </td>
+                            <td>Lorem Ipsum</td>
+                            <td></td>
                         </tr>
-                        <tr>
-                            <td>Remove/Delete User from database</td>
-                            <td>/users/[ID]</td>
-                            <td>DELETE</td>
-                            <td>None</td>
-                            <td>
-                                <p>A message indicating whether the user wassuccessfully removed</p>
-                                <p class="text-warning">app.delete('/users/:account/[ID]', (req, res) => {<br>res.status(201).send('This account has been deleted.');<br>});
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Express error handling</td>
-                            <td>&nbsp;</td>
-                            <td>USE</td>
-                            <td>None</td>
-                            <td>
-                                <p class="text-warning">app.use(function(err, req, res, next) {<br>console.error(err.stack),<br>res.status(500).send('Try Again')<br>}
-                                </p>
-                            </td>
-                        </tr>
+
                     </table>
                 </div>
 
