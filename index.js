@@ -84,7 +84,7 @@
  ];
 
  app.get('/', (req, res) => {
-     res.send('Welcom to myFlix');
+     res.send('Welcome to myFlix');
  })
 
  //public doc
@@ -103,12 +103,15 @@
          movies.find((movie) => {
              return movie.title === req.params.title
          })
+
      );
  });
 
- // GET info by Director
+ // GET by Director
  app.get('/movies/:title/:director', (req, res) => {
-     res.send('Successful GET request returning data on director: ' + req.params.director);
+     res.json(movies.find((movie) => {
+         return movie.director === req.params.director
+     }))
  });
 
  // POST new user
@@ -118,21 +121,11 @@
 
  // PUT  users info
  app.put('/users/:name', (req, res) => {
-     res.send('Update' + req.params.name + '\s info.');
- });
-
- // POST new movie to users fav. list
- app.post('/users/:name/movies/:title', (req, res) => {
-     res.send('Successful POST request to add movie ' + req.params.title + ' too ' + req.params.name + ' favorite list');
- });
-
- // DELETE movie from list
- app.delete('/users/:name/movies/:title', (req, res) => {
-     res.send('Successful DELETE request. movie ' + req.params.title + ' was deleted from ' + req.params.name + ' favorite list');
+     res.send('Update ' + req.params.name + '\s info.');
  });
 
  // DELETE user profile
- app.delete('/users/:id', (req, res) => {
+ app.delete('/users/:name/:id', (req, res) => {
      res.status(201).send('This account has been deleted.');
  });
 

@@ -135,21 +135,16 @@
                             <th>Response body data format</th>
                         </tr>
                         <tr>
-                            <td>Return a list of ALL movies to the user</td>
+                            <td>Get a list of movies</td>
                             <td>/movies</td>
                             <td>GET</td>
                             <td>None</td>
                             <td>
-                                <p>A JSON object holding data about all the movies</p>
-                                <p class="text-warning">
-
-                                    app.get('/movies/:title', (req, res) => {<br>res.json(<br>movies.find((value1) => {<br>return value1.title === req.params.title<br>})<br>)<br>});<br>
-                                </p>
                             </td>
 
                         </tr>
                         <tr>
-                            <td>Return data about a single movie by title to the user</td>
+                            <td>Get data about a movie by title</td>
                             <td>/movies/:title</td>
                             <td>GET</td>
                             <td>None</td>
@@ -163,14 +158,11 @@
 
                         </tr>
                         <tr>
-                            <td>Return data about a genre by title (e.g., “Action”)</td>
-                            <td>/movies/:titles/:genres</td>
+                            <td>Get data about a single director by name</td>
+                            <td>/movies/:title/:director</td>
                             <td>GET</td>
                             <td>None</td>
                             <td>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                <p class="text-warning">app.get('/movies/:titles/:genre', (req, res) => {<br>res.send('Movie Genres');<br>});
-                                </p>
                             </td>
 
                         </tr>
