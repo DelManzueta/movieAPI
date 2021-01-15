@@ -10,6 +10,14 @@
  app.use(bodyParser.urlencoded({ extended: true }));
  app.use(bodyParser.json());
 
+ const mongoose = require('mongoose');
+ const Models = require('./models.js');
+
+ const Movies = Models.Movie;
+ const Users = Models.User;
+
+ mongoose.connect('mongodb://localhost:27017/dbname', { useNewUrlParser: true, useUnifiedTopology: true });
+
  let movies = [{
          id: 1,
          title: '300',
