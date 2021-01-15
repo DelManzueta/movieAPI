@@ -34,7 +34,7 @@
      {
          id: 4,
          title: 'Akira',
-         director: 'SKatsuhiro Ôtomo',
+         director: 'Katsuhiro Ôtomo',
          year: '1988',
          genre: ['Animation', 'Action', 'Sci-Fi']
      },
@@ -69,7 +69,7 @@
      {
          id: 9,
          title: 'Batman',
-         director: 'Peter Jackson',
+         director: 'Tim Burton',
          year: '1989',
          genre: ['Action', 'Adventure', 'Fantasy']
      },
