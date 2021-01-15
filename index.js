@@ -16,7 +16,7 @@
  const Movies = Models.Movie;
  const Users = Models.User;
 
- mongoose.connect('mongodb://localhost:27017/dbname', { useNewUrlParser: true, useUnifiedTopology: true });
+ mongoose.connect('mongodb://localhost:27017/movieAPI', { useNewUrlParser: true, useUnifiedTopology: true });
 
  let movies = [{
          id: 1,
