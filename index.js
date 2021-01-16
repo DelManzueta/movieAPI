@@ -10,14 +10,6 @@
  app.use(bodyParser.urlencoded({ extended: true }));
  app.use(bodyParser.json());
 
- const mongoose = require('mongoose');
- const Models = require('./models.js');
-
- const Movies = Models.Movie;
- const Users = Models.User;
-
- mongoose.connect('mongodb://localhost:27017/movieAPI', { useNewUrlParser: true, useUnifiedTopology: true });
-
  let movies = [{
          id: 1,
          title: '300',
@@ -42,7 +34,7 @@
      {
          id: 4,
          title: 'Akira',
-         director: 'Katsuhiro Ôtomo',
+         director: 'SKatsuhiro Ôtomo',
          year: '1988',
          genre: ['Animation', 'Action', 'Sci-Fi']
      },
@@ -77,7 +69,7 @@
      {
          id: 9,
          title: 'Batman',
-         director: 'Tim Burton',
+         director: 'Peter Jackson',
          year: '1989',
          genre: ['Action', 'Adventure', 'Fantasy']
      },
