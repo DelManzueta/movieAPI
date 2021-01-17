@@ -140,7 +140,23 @@
                             <td>/movies</td>
                             <td>GET</td>
                             <td>None</td>
-                            <td>A JSON object holding data of all the movies</td>
+                            <td>
+                                <p>A JSON object returning data on ALL movies</p>
+                                <pre class="line-numbers">
+  <code class="language-css text-warning">
+app.get('/movies', (req, res) => {
+    Movies.find()
+        .then((movies) => {
+            res.status(201).json(movies);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
+  </code>
+</pre>
+                            </td>
                         </tr>
                         <tr>
                             <td>Get data about a movie by title</td>
@@ -148,22 +164,25 @@
                             <td>GET</td>
                             <td>None</td>
                             <td>
-                                <p>A JSON object holding data about a single movie, containing an ID, title, director, and genre property:</p>
+                                <p>A JSON object returning data about a single movie by title to the user</p>
                                 <pre class="line-numbers">
   <code class="language-css text-warning">
-     {
-         id: 5,
-         title: 'Hook',
-         director: 'Steven Spielberg',
-         year: '1991',
-         genre: ['Adventure', 'Comedy', 'Family']
-     }
+app.get('/movies/:Title', (req, res) => {
+    Movies.findOne({ Title: req.params.Title })
+        .then((movie) => {
+            res.json(movie);
+        })
+        .catch((err) => {
+            console.err(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
   </code>
 </pre>
                             </td>
                         </tr>
                         <tr>
-                            <td>Get data about a single film director</td>
+                            <td>Return data of movies by specified genre.</td>
                             <td>/movies/:title/:director</td>
                             <td>GET</td>
                             <td>Lorem Ipsum</td>
@@ -171,7 +190,7 @@
                         </tr>
                         <tr>
                             <td>Get data about all films by a single genre</td>
-                            <td>/movies/:title/:genre/</td>
+                            <td>/movies/Genre</td>
                             <td>GET</td>
                             <td>Lorem Ipsum</td>
                             <td></td>
