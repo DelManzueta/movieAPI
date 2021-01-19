@@ -50,6 +50,21 @@ app.get('/movies', (req, res) => {
         });
 });
 
+app.get('/genres', (req, res) => {
+    Genres.find()
+        .then((genre) => {
+            res.status(201).json(genre);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
+
+
+
+
+
 // find movie by title
 app.get('/movies/:Title', (req, res) => {
     Movies.findOne({ Title: req.params.Title })
@@ -88,16 +103,7 @@ app.get('/movies/Directors/:Name', (req, res) => {
 });
 
 
-app.get('/genre/:Name', (req, res) => {
-    Genres.findOne({ Name: req.params.Name })
-        .then((genre) => {
-            res.json(genre.Description);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
-});
+
 
 
 // adds data for a new movie to our list of movies
@@ -196,6 +202,7 @@ app.put('/users/:Username', (req, res) => {
             }
         });
 });
+
 
 // Add a movie to a user's list of favorites
 app.post('/users/:Username/Movies/:MovieID', (req, res) => {
