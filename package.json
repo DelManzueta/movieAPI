@@ -32,11 +32,14 @@
         "mongocli": "0.0.1",
         "mongodb": "^3.6.3",
         "mongoose": "^5.11.12",
+        "mongoshell": "^1.0.0",
         "morgan": "^1.10.0",
         "passport": "^0.4.1",
         "passport-jwt": "^4.0.0",
         "passport-local": "^1.0.0",
-        "sequelize": "^6.3.5",
+        "react-native-code-push": "^7.0.0",
+        "sequelize": "^6.4.0",
+        "shell": "^0.8.4",
         "uuid": "^8.3.2"
     },
     "devDependencies": {}

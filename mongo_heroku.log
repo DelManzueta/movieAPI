@@ -1,0 +1,35 @@
+https://git.heroku.com/zuetamyflix.git
+
+
+
+
+/*mongoimport*/
+mongoimport 
+    --uri mongodb+srv://zueta:gniwled@myflixdb.hsfga.mongodb.net/myflixdb 
+    --collection movies 
+    --type json 
+    --file <FILENAME>
+
+
+
+
+mongoimport 
+    --host myFlixDB-shard-0/myflixdb-shard-00-00-jvame.mongodb.net:27017,myflixdb-shard-00-01-jvame.mongodb.net:27017,myflixdb-shard-00-02-jvame.mongodb.net:27017 
+    --ssl 
+    --username myFlixDBadmin 
+    --password 12345
+    --authenticationDatabase admin
+    --db myFlixDB
+    --collection movies
+    --type json
+    --file ../exported_collections/movies.json
+
+
+
+
+
+
+/* mongoexport */
+mongoexport --uri mongodb+srv://zueta:gniwled@myflixdb.hsfga.mongodb.net/myflixdb --collection <COLLECTION> --type <FILETYPE> --out <FILENAME>
+
+
