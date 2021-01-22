@@ -1,6 +1,7 @@
 https://git.heroku.com/zuetamyflix.git
 
 
+mongoimport --uri mongodb+srv://zueta:<PASSWORD>@myflixdb.hsfga.mongodb.net/<DATABASE> --collection <COLLECTION> --type <FILETYPE> --file <FILENAME>
 
 
 /*mongoimport*/
@@ -10,6 +11,19 @@ mongoimport
     --type json 
     --file <FILENAME>
 
+
+
+
+mongoimport 
+    --host mongodb+srv://zueta:gniwled@myflixdb.hsfga.mongodb.net/myflixdb
+    --ssl 
+    --username zueta
+    --password gniwled
+    --authenticationDatabase admin
+    --db myFlixDB
+    --collection movies
+    --type json
+    --file ../exported_collections/movies.json
 
 
 
@@ -24,7 +38,7 @@ mongoimport
     --type json
     --file ../exported_collections/movies.json
 
-
+mongo "mongodb+srv://myflixdb.hsfga.mongodb.net/myFlixDB" --username zueta
 
 
 
@@ -32,4 +46,7 @@ mongoimport
 /* mongoexport */
 mongoexport --uri mongodb+srv://zueta:gniwled@myflixdb.hsfga.mongodb.net/myflixdb --collection <COLLECTION> --type <FILETYPE> --out <FILENAME>
 
+
+/* heroku uri*/
+https://obscure-chamber-94776.herokuapp.com/ | https://git.heroku.com/obscure-chamber-94776.git
 
