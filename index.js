@@ -23,10 +23,10 @@ mongoose.connect(
 );
 
 // listen for requests
-const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0', () => {
-    console.log('Localhost is running on port: ' + port);
-});
+// const port = process.env.PORT || 8080;
+// app.listen(port, '0.0.0.0', () => {
+//     console.log('Localhost is running on port: ' + port);
+// });
 
 
 // listen for requests: local
@@ -46,14 +46,19 @@ app.use((err, req, res, next) => {
 
 
 /* CORS */
-var corsUsers = {
+
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflixdbs-z.herokuapp.com/'];
+app.use(cors({
     origin: function(origin, callback) {
-        // a list of origins from a backing database
-        db.Users(function(error, origins) {
-            callback(error, origins)
-        })
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            var message = 'The CORS policy for this application does not allow access from origin ' + origin;
+            return callback(new Error(message), false);
+        }
+        return callback(null, true);
     }
-}
+}));
+
 
 // public doc
 app.get('/public', (req, res) => {
@@ -111,7 +116,7 @@ app.get('/movies/Directors/:Name', passport.authenticate('jwt', { session: false
         });
 });
 
-app.get('/users', passport.authenticate('jwt', { session: false }), cors(corsUsers), (req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.find()
         .then((users) => {
             res.status(201).json(users);
@@ -122,7 +127,7 @@ app.get('/users', passport.authenticate('jwt', { session: false }), cors(corsUse
         });
 });
 
-app.get('/users/:Username', passport.authenticate('jwt', { session: false }), cors(corsUsers), (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOne({ Username: req.params.Username })
         .then((user) => {
             res.json(user);
@@ -133,14 +138,13 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), co
         });
 });
 
-app.get('/login', cors(corsUsers), function(req, res) {
+app.get('/login', function(req, res) {
     res.status(200).send(`Welcome to login , sign-up api`);
 });
 
 
 /* POST REQUESTS */
-app.post('/users',
-    cors(corsUsers), [
+app.post('/users', [
         check('Username', 'Username is required').isLength({ min: 5 }),
         check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
         check('Password', 'Password is required').not().isEmpty(),
@@ -224,8 +228,7 @@ app.post('/users/:Username/Movies/:MovieID/Remove', passport.authenticate('jwt',
 
 /* PUT REQUESTS */
 
-app.put('/users/:Username',
-    cors(corsUsers), [
+app.put('/users/:Username', [
         check('Username', 'Username is required').isLength({ min: 5 }),
         check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
         check('Password', 'Password is required').not().isEmpty(),
