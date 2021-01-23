@@ -46,7 +46,6 @@ app.use((err, req, res, next) => {
 
 
 /* CORS */
-
 let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflixdbs-z.herokuapp.com/'];
 app.use(cors({
     origin: function(origin, callback) {
