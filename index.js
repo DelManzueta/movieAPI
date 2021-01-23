@@ -23,10 +23,10 @@ mongoose.connect(
 );
 
 // listen for requests
-// const port = process.env.PORT || 8080;
-// app.listen(port, '0.0.0.0', () => {
-//     console.log('Localhost is running on port: ' + port);
-// });
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+    console.log('Localhost is running on port: ' + port);
+});
 
 
 // listen for requests: local
