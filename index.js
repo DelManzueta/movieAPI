@@ -261,7 +261,7 @@ app.put('/users/:Username', [
     });
 
 /* DELETE REQUESTS */
-app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), cors(corsUsers), (req, res) => {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
         .then((user) => {
             if (!user) {
@@ -276,7 +276,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
         });
 });
 
-app.delete('/users/:Username/Favorites/:MovieID', passport.authenticate('jwt', { session: false }), cors(corsUsers), (req, res) => {
+app.delete('/users/:Username/Favorites/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
             $pull: { FavoriteMovies: req.params.MovieID }
         }, { new: true },
