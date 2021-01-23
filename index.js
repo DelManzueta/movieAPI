@@ -1,22 +1,26 @@
 const
     express = require('express'),
     bodyParser = require('body-parser'),
-    uuid = require('uuid'),
     morgan = require('morgan'),
-    mongoose = require('mongoose'),
-    passport = require('passport'),
     cors = require('cors'),
-    Models = require('./models.js');
 
-const
+    mongoose = require('mongoose'),
+    uuid = require('uuid'),
+    passport = require('passport'),
+    Models = require('./models.js'),
+
     Movies = Models.Movie,
-    Users = Models.User,
-    Genres = Models.Genre,
-    Directors = Models.Director;
+    Users = Models.User;
 
 const app = express();
 const { check, validationResult } = require('express-validator');
 
+require('./auth')(app);
+require('./passport');
+
+mongoose.connect(
+    process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }
+);
 
 // listen for requests
 const port = process.env.PORT || 8080;
@@ -24,12 +28,11 @@ app.listen(port, '0.0.0.0', () => {
     console.log('Localhost is running on port: ' + port);
 });
 
-mongoose.connect(
-    process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }
-);
 
-require('./auth')(app);
-require('./passport');
+// listen for requests: local
+// app.listen(8080, () => {
+//     console.log('Your app is listening on port 8080.');
+// });
 
 app.use(morgan('common')); // log requests to server
 app.use(express.static('public'));
