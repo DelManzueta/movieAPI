@@ -41,7 +41,6 @@ userSchema.methods.validatePassword = function(password) {
     return bcrypt.compareSync(password, this.Password);
 };
 
-
 /* Genres */
 let genreSchema = mongoose.Schema({
     Name: { type: String, required: true },

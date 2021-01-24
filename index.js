@@ -6,7 +6,7 @@ const
 
     mongoose = require('mongoose'),
     uuid = require('uuid'),
-    passport = require('passport'),
+
     Models = require('./models.js'),
 
     Movies = Models.Movie,
@@ -15,7 +15,9 @@ const
 const app = express();
 const { check, validationResult } = require('express-validator');
 
-require('./auth')(app);
+let auth = require('./auth')(app);
+
+const passport = require('passport');
 require('./passport');
 
 mongoose.connect(
@@ -27,7 +29,6 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
     console.log('Localhost is running on port: ' + port);
 });
-
 
 // listen for requests: local
 // app.listen(8080, () => {
@@ -46,7 +47,7 @@ app.use((err, req, res, next) => {
 
 
 /* CORS */
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflixdbs-z.herokuapp.com/'];
+let allowedOrigins = ['http://localhost:8080', 'https://myflixdbs-z.herokuapp.com/'];
 app.use(cors({
     origin: function(origin, callback) {
         if (!origin) return callback(null, true);
@@ -93,18 +94,8 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
         });
 });
 
-app.get('/movies/Genres/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Movies.findOne({ Title: req.params.Title })
-        .then((movie) => {
-            res.status(201).json(movie.Genre.Name + ": " + movie.Genre.Description);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
-});
 
-app.get('/movies/Directors/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/Directors/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.findOne({ "Director.Name": req.params.Name })
         .then((movie) => {
             res.status(201).json(movie.Director.Name + ": " + movie.Director.Bio);
@@ -114,6 +105,19 @@ app.get('/movies/Directors/:Name', passport.authenticate('jwt', { session: false
             res.status(500).send('Error: ' + err);
         });
 });
+
+app.get('/Genres/:name', passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        Movies.findOne({ 'Genre.Name': req.params.name })
+            .then((movies) => {
+                res.status(201).json(movies.Genre);
+            })
+            .catch((error) => {
+                console.error(error);
+                res.status(500).send('Error: ' + error);
+            });
+    }
+);
 
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.find()
@@ -225,8 +229,9 @@ app.post('/users/:Username/Movies/:MovieID/Remove', passport.authenticate('jwt',
         });
 });
 
-/* PUT REQUESTS */
 
+
+/* PUT REQUESTS */
 app.put('/users/:Username', [
         check('Username', 'Username is required').isLength({ min: 5 }),
         check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
