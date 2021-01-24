@@ -232,27 +232,16 @@ app.post('/users/:Username/Movies/:MovieID/Remove', passport.authenticate('jwt',
 
 
 /* PUT REQUESTS */
-app.put('/users/:Username', [
-        check('Username', 'Username is required').isLength({ min: 5 }),
-        check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-        check('Password', 'Password is required').not().isEmpty(),
-        check('Email', 'Email does not appear to be valid').isEmail()
-    ],
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
     (req, res) => {
-        //check the validation for errors
-        let errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(422).json({ errors: errors.array() });
-        }
-        let hashedPassword = Users.hashPassword(req.body.Password);
         Users.findOneAndUpdate({ Username: req.params.Username }, {
                 $set: {
                     Username: req.body.Username,
                     Password: req.body.Password,
                     Email: req.body.Email,
-                    Birthdate: req.body.Birthdate
+                    Birthday: req.body.Birthday
                 }
-            }, { new: true },
+            }, { new: true }, // This line makes sure that the updated document is returned
             (err, updatedUser) => {
                 if (err) {
                     console.error(err);
@@ -261,7 +250,6 @@ app.put('/users/:Username', [
                     res.json(updatedUser);
                 }
             });
-
     });
 
 /* DELETE REQUESTS */
