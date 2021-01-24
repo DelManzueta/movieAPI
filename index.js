@@ -230,7 +230,6 @@ app.post('/users/:Username/Movies/:MovieID/Remove', passport.authenticate('jwt',
 });
 
 
-
 /* PUT REQUESTS */
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
     (req, res) => {
