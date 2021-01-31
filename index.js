@@ -2,7 +2,7 @@ const
     express = require('express'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
-    cors = require('cors'),
+    cors = require('cors'), // enable CORS for a single route
 
     mongoose = require('mongoose'),
     uuid = require('uuid'),
@@ -39,7 +39,7 @@ app.use(morgan('common')); // log requests to server
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors()); // Enable All CORS Requests
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Check for errors');
@@ -47,17 +47,19 @@ app.use((err, req, res, next) => {
 
 
 /* CORS */
-let allowedOrigins = ['http://localhost:8080', 'https://myflixdbs-z.herokuapp.com/'];
-app.use(cors({
-    origin: function(origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            var message = 'The CORS policy for this application does not allow access from origin ' + origin;
-            return callback(new Error(message), false);
-        }
-        return callback(null, true);
+let originDb = ['http://localhost:8080', 'https://myflixdbs-z.herokuapp.com/']
+
+var corsOd = function(req, callback) {
+    var corsOptions;
+    if (originDb.indexOf(req.header('Origin')) !== -1) {
+        corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+    } else {
+        corsOptions = { origin: false } // disable CORS for this request
     }
-}));
+    callback(null, corsOptions) // callback expects two parameters: error and options
+}
+
+
 
 
 // public doc
@@ -72,7 +74,7 @@ app.get('/', (req, res) => {
 
 
 /* GET REQUESTS */
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies', (req, res) => {
     Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
@@ -83,7 +85,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
         });
 });
 
-app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies/:Title', cors(), (req, res) => { // Enable CORS for a Single Route
     Movies.findOne({ Title: req.params.Title })
         .then((movie) => {
             res.status(201).json(movie)
@@ -252,7 +254,9 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
     });
 
 /* DELETE REQUESTS */
-app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+app.options('/users/:Username', cors()) // enable pre-flight request for DELETE request
+app.del('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
         .then((user) => {
             if (!user) {
