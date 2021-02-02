@@ -26,7 +26,7 @@ mongoose.connect(
 
 // listen for requests
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, '*', () => {
     console.log('Localhost is running on port: ' + port);
 });
 
@@ -37,9 +37,12 @@ app.listen(port, '0.0.0.0', () => {
 
 app.use(morgan('common')); // log requests to server
 app.use(express.static('public'));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 app.use(cors()); // Enable All CORS Requests
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Check for errors');
@@ -47,7 +50,7 @@ app.use((err, req, res, next) => {
 
 
 /* CORS */
-let originDb = ['http://localhost:8080', 'https://myflixdbs-z.herokuapp.com/']
+let originDb = ['https://myflixdbs-z.herokuapp.com/']
 
 var corsOd = function(req, callback) {
     var corsOptions;
