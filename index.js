@@ -41,7 +41,16 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(cors()); // Enable All CORS Requests
+app.use(cors({
+    origin: function(origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            var message = 'The CORS policy for this application does not allow access from origin ' + origin;
+            return callback(new Error(message), false);
+        }
+        return callback(null, true);
+    }
+}));
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -50,7 +59,7 @@ app.use((err, req, res, next) => {
 
 
 /* CORS */
-let originDb = ['https://myflixdbs-z.herokuapp.com/']
+let originDb = ['http://localhost:8080', 'http://localhost:1234', 'https://myflixdbs-z.herokuapp.com/']
 
 var corsOd = function(req, callback) {
     var corsOptions;
@@ -91,6 +100,7 @@ app.get('/movies', (req, res) => {
 app.get('/movies/:Title', cors(), (req, res) => { // Enable CORS for a Single Route
     Movies.findOne({ Title: req.params.Title })
         .then((movie) => {
+
             res.status(201).json(movie)
         })
         .catch((err) => {
@@ -100,7 +110,7 @@ app.get('/movies/:Title', cors(), (req, res) => { // Enable CORS for a Single Ro
 });
 
 
-app.get('/Directors/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/Directors/:Name', (req, res) => {
     Movies.findOne({ "Director.Name": req.params.Name })
         .then((movie) => {
             res.status(201).json(movie.Director.Name + ": " + movie.Director.Bio);
@@ -111,7 +121,7 @@ app.get('/Directors/:Name', passport.authenticate('jwt', { session: false }), (r
         });
 });
 
-app.get('/Genres/:name', passport.authenticate('jwt', { session: false }),
+app.get('/Genres/:name',
     (req, res) => {
         Movies.findOne({ 'Genre.Name': req.params.name })
             .then((movies) => {
@@ -259,7 +269,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
 /* DELETE REQUESTS */
 
 app.options('/users/:Username', cors()) // enable pre-flight request for DELETE request
-app.del('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
         .then((user) => {
             if (!user) {
