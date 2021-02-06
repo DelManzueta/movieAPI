@@ -2,7 +2,7 @@ const
     express = require('express'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
-    cors = require('cors'), // enable CORS for a single route
+    cors = require('cors'),
 
     mongoose = require('mongoose'),
     uuid = require('uuid'),
@@ -27,7 +27,7 @@ mongoose.connect(
 // listen for requests
 const port = process.env.PORT || 8080;
 app.listen(port, '*', () => {
-    console.log('Localhost is running on port: ' + port);
+    console.log('Listening on port: ' + port);
 });
 
 // listen for requests: local
@@ -59,7 +59,11 @@ app.use((err, req, res, next) => {
 
 
 /* CORS */
-let originDb = ['http://localhost:8080', 'http://localhost:1234', 'https://myflixdbs-z.herokuapp.com/']
+let allowedOrigins = {
+    origin: [`http://localhost:8080`, `http://localhost:1234`, `https://myflixdbs-z.herokuapp.com/`],
+    optionsSuccessStatus: 200
+}
+
 
 var corsOd = function(req, callback) {
     var corsOptions;
