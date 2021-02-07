@@ -41,16 +41,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(cors({
-    origin: function(origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            var message = 'The CORS policy for this application does not allow access from origin ' + origin;
-            return callback(new Error(message), false);
-        }
-        return callback(null, true);
-    }
-}));
+
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -59,12 +50,20 @@ app.use((err, req, res, next) => {
 
 
 /* CORS */
-let allowedOrigins = {
-    origin: [`http://localhost:8080`, `http://localhost:1234`, `https://myflixdbs-z.herokuapp.com/`],
-    optionsSuccessStatus: 200
+var corsDO = ['http://localhost:1234', 'http://localhost:8080', 'https://myflixdbs-z.herokuapp.com']
+var corsOpt = {
+    origin: function(origin, callback) {
+        if (corsDO.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
 }
 
+// app.use(cors(allowedOrigins));
 
+/*
 var corsOd = function(req, callback) {
     var corsOptions;
     if (originDb.indexOf(req.header('Origin')) !== -1) {
@@ -75,14 +74,13 @@ var corsOd = function(req, callback) {
     callback(null, corsOptions) // callback expects two parameters: error and options
 }
 
-
+*/
 
 
 // public doc
-app.get('/public', passport.authenticate('jwt', { session: false }),
-    (res) => {
-        res.sendFile('public/documentation.html', { root: __dirname });
-    })
+app.get('/public', (res) => {
+    res.sendFile('public/documentation.html', { root: __dirname });
+})
 
 // Default response to main page
 app.get('/', (req, res) => {
