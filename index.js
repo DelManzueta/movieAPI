@@ -2,40 +2,49 @@ const
     express = require('express'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
-    cors = require('cors'),
+    mongoose = require('mongoose');
 
-    mongoose = require('mongoose'),
+
+const Models = require('./models.js'),
     uuid = require('uuid'),
+    passport = require('./passport');
 
-    Models = require('./models.js'),
 
-    Movies = Models.Movie,
+const Movies = Models.Movie,
     Users = Models.User;
 
-require('./passport');
-auth = require('./auth');
+const app = express();
+const cors = require('cors');
 
-morgan = require('morgan');
+const allowedOrigins = {
+    origin: [
+        'http://localhost:8080',
+        'http://localhost:1234',
+        'https://myflixdbs-z.herokuapp.com'
+    ],
+    optionsSuccessStatus: 200
+}
+const { check, validationResult } = require('express-validator');
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+require('./passport')
+require('./auth');
+require(Models);
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(allowedOrigins));
 
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflixdbs-z.herokuapp.com'];
-app.use(cors({
-    origin: function(origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            var message = 'The CORS policy for this application does not allow access from origin ' + origin;
-            return callback(new Error(message), false);
-        }
-        return callback(null, true);
-    }
-}));
-
-
+// app.use(cors({
+//     origin: function(origin, callback) {
+//         if (!origin) return callback(null, true);
+//         if (allowedOrigins.indexOf(origin) === -1) {
+//             var message = 'The CORS policy for this application does not allow access from origin ' + origin;
+//             return callback(new Error(message), false);
+//         }
+//         return callback(null, true);
+//     }
+// }));
 
 
 app.get('/public', (res) => {
@@ -52,17 +61,15 @@ app.get('/', (res) => {
 
 // GET
 
-app.get('/movies', passport.authenticate('jwt', { session: false }),
-    (res) => {
-        Movies.find()
-            .then((movies) => {
-                res.status(201).json(movies);
-            })
-            .catch((err) => {
-                console.error(err);
-                res.status(500).send('Error: ' + err);
-            });
-    });
+app.get('/movies', (res) => {
+    Movies.find()
+        .then((movies) => {
+            res.status(201).json(movies);
+        }).catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
 
 app.get('/movies/:title', passport.authenticate('jwt', { session: false }),
     (req, res) => {
