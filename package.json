@@ -40,6 +40,7 @@
         "passport": "^0.4.1",
         "passport-jwt": "^4.0.0",
         "passport-local": "^1.0.0",
+        "path": "^0.12.7",
         "react-native-code-push": "^7.0.0",
         "sequelize": "^6.4.0",
         "shell": "^0.8.4",
