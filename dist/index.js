@@ -130663,7 +130663,7 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Nope, try again...');
 });
 var port = undefined || 8080;
-app.listen(port, '0.0.0.0', function () {
+app.listen(port, '*', function () {
   console.log('Running the show on ' + port);
 });
 },{"express":"node_modules/express/index.js","body-parser":"node_modules/body-parser/index.js","morgan":"node_modules/morgan/index.js","cors":"node_modules/cors/lib/index.js","mongoose":"node_modules/mongoose/dist/browser.umd.js","uuid":"node_modules/uuid/dist/esm-browser/index.js","./models.js":"models.js","./passport":"passport.js","./auth":"auth.js"}],"../../../../../../../home/zueta/.nvm/versions/node/v14.15.3/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -130694,7 +130694,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53614" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56558" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
