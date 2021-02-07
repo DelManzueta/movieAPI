@@ -41,7 +41,7 @@ app.use(cors());
 var allowList = [
     'http://localhost:8080',
     'http://localhost:1234',
-    'https://myflixdbs-z.herokuapp.com'
+    'https://myflixdbs-z.herokuapp.com',
 ];
 var corsAllow = function(req, callback) {
     let corsOptions;
