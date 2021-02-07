@@ -79,9 +79,10 @@ var corsOd = function(req, callback) {
 
 
 // public doc
-app.get('/public', (req, res) => {
-    res.sendFile('public/documentation.html', { root: __dirname });
-})
+app.get('/public', passport.authenticate('jwt', { session: false }),
+    (res) => {
+        res.sendFile('public/documentation.html', { root: __dirname });
+    })
 
 // Default response to main page
 app.get('/', (req, res) => {
@@ -90,42 +91,45 @@ app.get('/', (req, res) => {
 
 
 /* GET REQUESTS */
-app.get('/movies', (req, res) => {
-    Movies.find()
-        .then((movies) => {
-            res.status(201).json(movies);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
-});
+app.get('/movies', passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        Movies.find()
+            .then((movies) => {
+                res.status(201).json(movies);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            });
+    });
 
-app.get('/movies/:Title', cors(), (req, res) => { // Enable CORS for a Single Route
-    Movies.findOne({ Title: req.params.Title })
-        .then((movie) => {
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        Movies.findOne({ Title: req.params.Title })
+            .then((movie) => {
 
-            res.status(201).json(movie)
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
-});
+                res.status(201).json(movie)
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            });
+    });
 
 
-app.get('/Directors/:Name', (req, res) => {
-    Movies.findOne({ "Director.Name": req.params.Name })
-        .then((movie) => {
-            res.status(201).json(movie.Director.Name + ": " + movie.Director.Bio);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
-});
+app.get('/Directors/:Name', passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        Movies.findOne({ "Director.Name": req.params.Name })
+            .then((movie) => {
+                res.status(201).json(movie.Director.Name + ": " + movie.Director.Bio);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            });
+    });
 
-app.get('/Genres/:name',
+app.get('/Genres/:name', passport.authenticate('jwt', { session: false }),
     (req, res) => {
         Movies.findOne({ 'Genre.Name': req.params.name })
             .then((movies) => {
@@ -138,27 +142,31 @@ app.get('/Genres/:name',
     }
 );
 
-app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Users.find()
-        .then((users) => {
-            res.status(201).json(users);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
-});
+app.get('/users',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        Users.find()
+            .then((users) => {
+                res.status(201).json(users);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            });
+    });
 
-app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Users.findOne({ Username: req.params.Username })
-        .then((user) => {
-            res.json(user);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        });
-});
+app.get('/users/:Username',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+        Users.findOne({ Username: req.params.Username })
+            .then((user) => {
+                res.json(user);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            });
+    });
 
 app.get('/login', function(req, res) {
     res.status(200).send(`Welcome to login , sign-up api`);
