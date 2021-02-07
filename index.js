@@ -21,6 +21,8 @@ app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(cors());
 
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
 let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflixdbs-z.herokuapp.com'];
 app.use(cors({
     origin: function(origin, callback) {
@@ -33,7 +35,7 @@ app.use(cors({
     }
 }));
 
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 
 app.get('/public', (res) => {
