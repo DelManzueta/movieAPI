@@ -36,7 +36,6 @@ app.use(cors({
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-
 app.get('/public', (res) => {
     res.sendFile('public/documentation.html', {
         root: __dirname
