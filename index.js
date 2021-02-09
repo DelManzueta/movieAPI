@@ -60,7 +60,7 @@ app.get('/public', (res) => {
 });
 app.use(express.static('public'));
 
-app.get('/', (res) => {
+app.get('/', cors(corsOption), (res) => {
     res.send('Welcome to myFlix');
 })
 
