@@ -33,33 +33,24 @@ require(Models);
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
-app.use(cors());
 
 
-var allowList = [
+
+var whiteList = [
     'http://localhost:8080',
     'http://localhost:1234',
     'https://myflixdbs-z.herokuapp.com',
 ];
-var corsAllow = function(req, callback) {
-    let corsOptions;
-    if (allowList.indexOf(req.header('Origin')) !== -1) {
-        corsAllow = { origin: true } // enable the requested origin in the CORS response
-    } else {
-        corsAllow = { origin: false } // disable CORS for this request
-    }
-    callback(null, corsAllow) //callback expects tow parameters: error and options
-}
-app.use(cors({
+var corsOption = {
     origin: function(origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowList.indexOf(origin) === -1) {
-            var message = 'The CORS policy for this application does not allow access from origin ' + origin;
-            return callback(new Error(message), false);
+        if (whiteList.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
         }
-        return callback(null, true);
     }
-}));
+}
+app.use(cors(corsOption));
 
 
 app.get('/public', (res) => {
@@ -76,7 +67,7 @@ app.get('/', (res) => {
 
 // GET
 
-app.get('/movies', (res) => {
+app.get('/movies', cors(corsOption), (res) => {
     Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
@@ -86,39 +77,36 @@ app.get('/movies', (res) => {
         });
 });
 
-app.get('/movies/:title', passport.authenticate('jwt', { session: false }),
-    (req, res) => {
-        Movies.findOne({ Title: req.params.title })
-            .then((movie) => {
-                res.status(201).json(movie)
-            })
-            .catch((err) => {
-                console.error(err);
-                res.status(500).send('Error: ' + err);
-            });
-    });
+app.get('/movies/:title', cors(corsOption), (req, res) => {
+    Movies.findOne({ Title: req.params.title })
+        .then((movie) => {
+            res.status(201).json(movie)
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
 
-app.get('/directors/:name', passport.authenticate('jwt', { session: false }),
-    (req, res) => {
-        Directors.findOne({ Name: req.params.name })
-            .then((director) => {
-                res.status(201).json(director)
-            })
-            .catch((err) => {
-                res.status(500).send("Error: " + err);
-            })
-    });
+app.get('/directors/:name', cors(corsOption), (req, res) => {
+    Directors.findOne({ Name: req.params.name })
+        .then((director) => {
+            res.status(201).json(director)
+        })
+        .catch((err) => {
+            res.status(500).send("Error: " + err);
+        })
+});
 
-app.get('/genres/:name', passport.authenticate('jwt', { session: false }),
-    (req, res) => {
-        Genres.findOne({ Name: req.params.name })
-            .then((genre) => {
-                res.status(201).json(genre)
-            })
-            .catch((err) => {
-                res.status(500).sent("Error: " + err);
-            })
-    });
+app.get('/genres/:name', cors(corsOption), (req, res) => {
+    Genres.findOne({ Name: req.params.name })
+        .then((genre) => {
+            res.status(201).json(genre)
+        })
+        .catch((err) => {
+            res.status(500).sent("Error: " + err);
+        })
+});
 
 
 // POST
