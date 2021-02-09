@@ -46,11 +46,11 @@ var allowList = [
 var corsAllow = function(req, callback) {
     let corsOptions;
     if (allowList.indexOf(req.header('Origin')) !== -1) {
-        corsOptions = { origin: true } // enable the requested origin in the CORS response
+        corsAllow = { origin: true } // enable the requested origin in the CORS response
     } else {
-        corsOptions = { origin: false } // disable CORS for this request
+        corsAllow = { origin: false } // disable CORS for this request
     }
-    callback(null, corsOptions) //callback expects tow parameters: error and options
+    callback(null, corsAllow) //callback expects tow parameters: error and options
 }
 app.use(cors({
     origin: function(origin, callback) {
