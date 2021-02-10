@@ -60,14 +60,14 @@ app.get('/public', (res) => {
 });
 app.use(express.static('public'));
 
-app.get('/', cors(corsOption), (res) => {
+app.get('/', (res) => {
     res.send('Welcome to myFlix');
 })
 
 
 // GET
 
-app.get('/movies', cors(corsOption), (res) => {
+app.get('/movies', (res) => {
     Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
@@ -77,7 +77,7 @@ app.get('/movies', cors(corsOption), (res) => {
         });
 });
 
-app.get('/movies/:title', cors(corsOption), (req, res) => {
+app.get('/movies/:title', (req, res) => {
     Movies.findOne({ Title: req.params.title })
         .then((movie) => {
             res.status(201).json(movie)
@@ -88,7 +88,7 @@ app.get('/movies/:title', cors(corsOption), (req, res) => {
         });
 });
 
-app.get('/directors/:name', cors(corsOption), (req, res) => {
+app.get('/directors/:name', (req, res) => {
     Directors.findOne({ Name: req.params.name })
         .then((director) => {
             res.status(201).json(director)
@@ -98,7 +98,7 @@ app.get('/directors/:name', cors(corsOption), (req, res) => {
         })
 });
 
-app.get('/genres/:name', cors(corsOption), (req, res) => {
+app.get('/genres/:name', (req, res) => {
     Genres.findOne({ Name: req.params.name })
         .then((genre) => {
             res.status(201).json(genre)
