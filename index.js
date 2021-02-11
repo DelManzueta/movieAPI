@@ -12,28 +12,27 @@ const passport = require('./passport');
 
 const
     Movies = Models.Movie,
-    Users = Models.User;
+    Users = Models.User,
+    Directors = Models.Directors,
+    Genres = Models.Genres;
 
 const app = express();
 
 const { check, validationResult } = require('express-validator');
 const PORT = process.env.PORT || 8080;
 
-mongoose.connect(process.env.CONNECTION_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 require('./auth')
-    // require(Models);
+require(Models);
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
 
-app.use(cors());
-app.use(cors({ origin: '*' }, 'allowedOrigins'))
+// app.use(cors());
+app.use(cors({ origin: '*' }))
     // let allowedOrigins = ['*'];
 let allowedOrigins = [
     'http://localhost:8080',
