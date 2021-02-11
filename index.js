@@ -32,8 +32,8 @@ app.use(bodyParser.json());
 
 
 // app.use(cors());
-app.use(cors({ origin: '*' }))
-    // let allowedOrigins = ['*'];
+// app.use(cors({ origin: '*' }))
+// let allowedOrigins = ['*'];
 let allowedOrigins = [
     'http://localhost:8080',
     'http://localhost:1234',
