@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 
 
 app.use(cors());
-app.use(cors({ origin: '*' }))
+app.use(cors({ origin: '*' }, 'allowedOrigins'))
     // let allowedOrigins = ['*'];
 let allowedOrigins = [
     'http://localhost:8080',
@@ -53,11 +53,6 @@ app.use(cors({
     }
 }));
 
-app.all('/', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
-});
 
 app.get('/public', (res) => {
     res.sendFile('public/documentation.html', {
