@@ -26,19 +26,17 @@ mongoose.connect(process.env.CONNECTION_URI, {
 
 
 require('./passport')
-require('./auth')(app);
 require(Models);
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
 
-// app.use(cors());
+app.use(cors());
 app.use(cors({ origin: '*' }))
     // let allowedOrigins = ['*'];
-    // let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflixdbs-z.herokuapp.com/'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflixdbs-z.herokuapp.com/'];
 
-/*
 app.use(cors({
     origin: function(origin, callback) {
         if (!origin) return callback(null, true);
@@ -49,7 +47,7 @@ app.use(cors({
         return callback(null, true);
     }
 }));
-*/
+
 
 app.get('/public', (res) => {
     res.sendFile('public/documentation.html', {
