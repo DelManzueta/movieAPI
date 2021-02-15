@@ -13,8 +13,8 @@ const passport = require('./passport');
 const
     Movies = Models.Movie,
     Users = Models.User,
-    Directors = Models.Directors,
-    Genres = Models.Genres;
+    Directors = Models.Director,
+    Genres = Models.Genre;
 
 const app = express();
 
@@ -23,9 +23,8 @@ const PORT = process.env.PORT || 8080;
 
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-
-require('./auth')
-require(Models);
+auth = require('./auth')(app);
+models = require(Models);
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
@@ -37,7 +36,7 @@ app.use(bodyParser.json());
 let allowedOrigins = [
     'http://localhost:8080',
     'http://localhost:1234',
-    'https://myflixdbs-z.herokuapp.com/Movies'
+    'https://myflixdbs-z.herokuapp.com/'
 ];
 
 app.use(cors({
@@ -53,17 +52,17 @@ app.use(cors({
 }));
 
 
-app.get('/public', (res) => {
-    res.sendFile('public/documentation.html', {
-        root: __dirname
-    });
-});
 app.use(express.static('public'));
 
 app.get('/', (res) => {
     res.send('Welcome to myFlix');
 })
 
+app.get('/public', (res) => {
+    res.sendFile('public/documentation.html', {
+        root: __dirname
+    });
+});
 
 // GET
 
