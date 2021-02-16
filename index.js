@@ -22,6 +22,7 @@ const { check, validationResult } = require('express-validator');
 const PORT = process.env.PORT || 8080;
 
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 auth = require('./auth')(app);
 models = require(Models);

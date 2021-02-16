@@ -1,7 +1,50 @@
 [
-{ "_id" : { "$oid" : "600a79698d8b81882b37464e" }, "Username" : "John Doe", "Password" : "1234", "Email" : "myEmail@email.com", "Birthday" : "08/16/1982", "FavoriteMovies" : [  ] },
-{ "_id" : { "$oid" : "600a79698d8b81882b37464f" }, "Username" : "Jane Doe", "Password" : "556677", "Email" : "myNewEmail@email.com", "Birthday" : { "$date" : "1985-02-19T00:00:00.000+0000" }, "FavoriteMovies" : [  ] },
-{ "_id" : { "$oid" : "600a79698d8b81882b374650" }, "Username" : "oneUserName", "Password" : "Password", "Email" : "nextEmail@email.com", "Birthday" : { "$date" : "1992-10-02T00:00:00.000+0000" }, "FavoriteMovies" : [  ] },
-{ "_id" : { "$oid" : "600a79698d8b81882b374651" }, "Username" : "anotherUserName", "Password" : "Password", "Email" : "nextEmail2021@email.com", "Birthday" : { "$date" : "2000-03-11T00:00:00.000+0000" }, "FavoriteMovies" : [  ] },
-{ "_id" : { "$oid" : "600a796a8d8b81882b374652" }, "Username" : "Another Cool UserName", "Password" : "Password", "Email" : "myCoolEmail@email.com", "Birthday" : { "$date" : "1972-02-03T00:00:00.000+0000" }, "FavoriteMovies" : [  ] }
+    {
+        "_id": "600a79698d8b81882b37464e",
+        "Username": "John Doe",
+        "Password": "1234",
+        "Email": "myEmail@email.com",
+        "Birthday": "08/16/1982",
+        "FavoriteMovies": []
+    },
+    {
+        "_id": "600a79698d8b81882b37464f",
+        "Username": "Jane Doe",
+        "Password": "556677",
+        "Email": "myNewEmail@email.com",
+        "Birthday": {
+            "$date": "1985-02-19T00:00:00.000+0000"
+        },
+        "FavoriteMovies": []
+    },
+    {
+        "_id": "600a79698d8b81882b374650",
+        "Username": "oneUserName",
+        "Password": "Password",
+        "Email": "nextEmail@email.com",
+        "Birthday": {
+            "$date": "1992-10-02T00:00:00.000+0000"
+        },
+        "FavoriteMovies": []
+    },
+    {
+        "_id": "600a79698d8b81882b374651",
+        "Username": "anotherUserName",
+        "Password": "Password",
+        "Email": "nextEmail2021@email.com",
+        "Birthday": {
+            "$date": "2000-03-11T00:00:00.000+0000"
+        },
+        "FavoriteMovies": []
+    },
+    {
+        "_id": "600a796a8d8b81882b374652",
+        "Username": "Another Cool UserName",
+        "Password": "Password",
+        "Email": "myCoolEmail@email.com",
+        "Birthday": {
+            "$date": "1972-02-03T00:00:00.000+0000"
+        },
+        "FavoriteMovies": []
+    }
 ]
