@@ -1,0 +1,37 @@
+
+// reconfigure mongodb/atlas/heroku/cors 
+
+
+{ MAIN VIEW } = MAIN Component { 'this.state'}
+        - fetches and lists all movies ( 'MOVIE CARD' component )
+{ MOVIE CARD } = POST - displays a basic movie summary { 'this.state' , 'this.props' }
+{ MOVIE VIEW } = GET - displays genre, director etc. { 'this.props' }
+
+{ MOVIE CARD } passes request to { MOVIE VIEW },
+{ MOVIE VIEW } then sends data ('genres, directors, etc.') back to { MOVIE CARD }
+{ MOVIE CARD } displays data received from { MOVIE VIEW }
+
+    **** add code allowing users to go { MOVIE CARD = > MOVIE VIEW }
+    **** add a button to { MOVIE VIEW => MAIN VIEW } 
+
+
+MOVIE CARD is displayed in { MAIN VIEW } component.
+
+MAIN VIEW is displayed in index.jsx
+
+index.jsx is displayed in index.html
+
+
+// IMPORTANT //
+
+/* LOCALHOST PARCEL Heroku - CORS issue / i think Axios too */
+1: need to address connection issues,
+2: make sure database is connected to Heroku,
+3: add a { ".cache" } folder to the { ".gitignore" } file,
+4: push to git branch,
+5: create pull request in repository
+
+
+mongoimport --uri mongodb+srv://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB --collection Movies --type json --file Movies.json --jsonArray
+mongoimport --uri mongodb+srv://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB --collection Users --type json --file Users.json --jsonArray
+mongodb+srv://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority
