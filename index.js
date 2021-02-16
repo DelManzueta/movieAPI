@@ -6,8 +6,8 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 
 
-const Models = require('./models.js');
-const passport = require('./passport');
+const Models = require('/models.js');
+const passport = require('/passport');
 
 
 const
@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 8080;
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku 
 // mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); // debug locally
 
-auth = require('./auth')(app);
+auth = require('/auth')(app);
 models = require(Models);
 
 app.use(morgan('common'));

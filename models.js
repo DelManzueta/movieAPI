@@ -43,19 +43,6 @@ userSchema.methods.validatePassword = function (password) {
     return bcrypt.compareSync(password, this.Password);
 };
 
-/* Genres */
-let genreSchema = mongoose.Schema({
-    Name: { type: String, required: true },
-    Description: { type: String, required: true }
-});
-
-/*  Directors */
-let directorSchema = mongoose.Schema({
-    Name: { type: String, required: true },
-    Bio: { type: String, required: true },
-    Birth: { type: String, required: true },
-    Death: { type: String, required: null }
-});
 
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
@@ -63,6 +50,4 @@ let User = mongoose.model('User', userSchema);
 // let Director = mongoose.model('Director', directorSchema);
 
 module.exports.Movie = Movie;
-module.exports.User = User;
-module.exports.Genre = Genre;
-module.exports.Director = Director;
+module.exports.User = User; 
