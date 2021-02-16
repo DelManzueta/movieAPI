@@ -6,8 +6,8 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 
 
-const Models = require('./models.js');
-const passport = require('./passport');
+const Models = require('models.js');
+const passport = require('passport');
 
 
 const
