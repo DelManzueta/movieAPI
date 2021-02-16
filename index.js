@@ -12,9 +12,7 @@ const passport = require('./passport');
 
 const
     Movies = Models.Movie,
-    Users = Models.User,
-    Directors = Models.Director,
-    Genres = Models.Genre;
+    Users = Models.User;
 
 const app = express();
 
