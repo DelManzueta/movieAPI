@@ -39,7 +39,7 @@ let allowedOrigins = [
     'https://myflixdbs-z.herokuapp.com/'
 ];
 
-app.use(cors({
+/* app.use(cors({
     origin: function(origin, callback) {
         if (!origin)
             return callback(null, true)
@@ -50,7 +50,7 @@ app.use(cors({
         return callback(null, true);
     }
 }));
-
+*/
 
 app.use(express.static('public'));
 
@@ -175,8 +175,8 @@ app.post('/users', [
 app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }),
     (req, res) => {
         Users.findOneAndUpdate({ Username: req.params.Username }, {
-                $push: { FavoriteMovies: req.params.MovieID }
-            }, { new: true },
+            $push: { FavoriteMovies: req.params.MovieID }
+        }, { new: true },
             (err, updatedUser) => {
                 if (err) {
                     console.error(err);
@@ -194,13 +194,13 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
     (req, res) => {
         let hashedPassword = Users.hashPassword(req.body.Password);
         Users.findOneAndUpdate({ Username: req.params.Username }, {
-                $set: {
-                    Username: req.body.Username,
-                    Password: hashedPassword,
-                    Email: req.body.Email,
-                    Birthday: req.body.Birthday
-                }
-            }, { new: true },
+            $set: {
+                Username: req.body.Username,
+                Password: hashedPassword,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
+            }
+        }, { new: true },
             (err, updatedUser) => {
                 if (err) {
                     console.error(err);
