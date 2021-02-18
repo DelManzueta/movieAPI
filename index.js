@@ -7,7 +7,8 @@ const express = require('express'),
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku 
+mongoose.connect(process.env.CONNECTION_URx, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku 
+//mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku 
 // mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); // debug locally
 
 const app = express();
@@ -199,6 +200,6 @@ app.use((err, res) => {
 });
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0/0', () => {
     console.log('Running the show on ' + PORT);
 });
