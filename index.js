@@ -199,7 +199,7 @@ app.use((err, res) => {
     res.status(500).send('Nope, try again...');
 });
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, '0.0.0.0/0', () => {
+const PORT = process.env.PORT || 1234;
+app.listen(PORT, 'http://localhost:1234', () => {
     console.log('Running the show on ' + PORT);
 });
