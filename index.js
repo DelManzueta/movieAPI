@@ -9,7 +9,9 @@ const Users = Models.User;
 
 //mongoose.connect(process.env.CONNECTION_URx, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku 
 //mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku 
-mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); // debug locally
+// mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); // debug locally
+
+const REMOTE =  mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); // debug locally;
 
 const app = express();
 
@@ -200,6 +202,6 @@ app.use((err, res) => {
 });
 
 const PORT = process.env.PORT || 1234;
-app.listen(PORT, 'http://localhost:1234', () => {
+app.listen(PORT, REMOTE ,' * ', () => {
     console.log('Running the show on ' + PORT);
 });
