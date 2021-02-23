@@ -7,9 +7,9 @@ const express = require('express'),
 const Movies = Models.Movie;
 const Users = Models.User;
 
-//mongoose.connect(process.env.CONNECTION_URx, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku 
-//mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku 
-mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); // debug locally
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku
+//mongoose.connect(process.env.CONNECTION_URx, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku w/o srv
+//mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); // debug locally
 
 const app = express();
 
@@ -45,7 +45,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (res) => {
     });
 });
 
-//GET Movie by Title
+// GET Movie by Title
 app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.findOne({ Title: req.params.Title }).then((movie) => {
         res.status(201).json(movie)
@@ -55,7 +55,7 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
     });
 });
 
-//GET info about Director
+// GET info about Director
 app.get('/movies/Directors/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.findOne({ "Director.Name": req.params.Name }).then((movie) => {
         res.status(201).json(movie.Director.Name + ": " + movie.Director.Bio);
