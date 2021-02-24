@@ -7,9 +7,9 @@ const express = require('express'),
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku
+// mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku
 //mongoose.connect(process.env.CONNECTION_URx, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku w/o srv
-//mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); // debug locally
+mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); // debug locally
 
 const app = express();
 
@@ -154,7 +154,7 @@ app.post('/users/:Username/Favorites/:MovieID', passport.authenticate('jwt', { s
         { new: true },
         (err, updatedUser) => {
             if (err) {
-                console.error(err);
+                console.error(err);cl
                 res.status(500).send('Error: ' + err);
             } else {
                 res.status(201).json(updatedUser);
