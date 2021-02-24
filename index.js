@@ -14,23 +14,40 @@ mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnified
 const app = express();
 
 app.use(morgan('common'));
-
 app.use(bodyParser.json());
-
 app.use(express.static('public'));
 
-let cors = require('cors');
+const cors = require('cors');
 app.use(cors());
 
-let auth = require('./auth')(app);
+const auth = require('./auth')(app);
 
-let passport = require('passport');
+const passport = require('passport');
 require('./passport');
 
 
 //
 const { check, validationResult } = require('express-validator');
 //
+
+
+let allowedOrigins = [
+    'http://localhost:8080',
+    'http://localhost:1234',
+    'https://myflixdbs-z.herokuapp.com/'
+];
+
+app.use(cors({
+    origin: function(origin, callback) {
+        if (!origin)
+            return callback(null, true)
+        if (allowedOrigins.indexOf(origin) === -1) {
+            var message = 'The CORS policy for this application does not allow access from origin ' + origin;
+            return callback(new Error(message), false);
+        }
+        return callback(null, true);
+    }
+}));
 
 
 app.get('/', (res) => { res.send('Welcome to myFlix') });
@@ -199,7 +216,8 @@ app.use((err, res) => {
     res.status(500).send('Nope, try again...');
 });
 
-const PORT = process.env.PORT || 1234;
-app.listen(PORT, 'http://localhost:1234', () => {
-    console.log('Running the show on ' + PORT);
+ 
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log('Running the show on ' + port + '!');
 });
