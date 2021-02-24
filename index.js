@@ -7,8 +7,8 @@ const express = require('express'),
 const Movies = Models.Movie;
 const Users = Models.User;
 
-//mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku
-mongoose.connect(process.env.CONNECTION_URx, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku w/o srv
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku
+// mongoose.connect(process.env.CONNECTION_URx, { useNewUrlParser: true, useUnifiedTopology: true }); // heroku w/o srv
 // mongoose.connect('mongodb://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }); // debug locally
 
 const app = express();
@@ -50,7 +50,10 @@ app.use(cors({
 }));
 
 
-app.get('/', (respond) => { respond.send('Welcome to myFlix') });
+app.get('/', (req, res) => {
+    res.send('myFlix')
+});
+
 
 // GET all movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), (res, req) => {
