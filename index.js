@@ -50,10 +50,10 @@ app.use(cors({
 }));
 
 
-app.get('/', (res) => { res.send('Welcome to myFlix') });
+app.get('/', (respond) => { respond.send('Welcome to myFlix') });
 
 // GET all movies
-app.get('/movies', passport.authenticate('jwt', { session: false }), (res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (res, req) => {
     Movies.find().then((movies) => {
         res.status(201).json(movies);
     }).catch((err) => {
@@ -145,13 +145,13 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
     (req, res) => {
         let hashedPassword = Users.hashPassword(req.body.Password);
         Users.findOneAndUpdate({ Username: req.params.Username }, {
-            $set: {
-                Username: req.body.Username,
-                Password: hashedPassword,
-                Email: req.body.Email,
-                Birthday: req.body.Birthday
-            }
-        }, { new: true },
+                $set: {
+                    Username: req.body.Username,
+                    Password: hashedPassword,
+                    Email: req.body.Email,
+                    Birthday: req.body.Birthday
+                }
+            }, { new: true },
             (err, updatedUser) => {
                 if (err) {
                     console.error(err);
@@ -166,12 +166,12 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
 // POST new movie to fav list
 app.post('/users/:Username/Favorites/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
-        $push: { FavoriteMovies: req.params.MovieID }
-    },
-        { new: true },
+            $push: { FavoriteMovies: req.params.MovieID }
+        }, { new: true },
         (err, updatedUser) => {
             if (err) {
-                console.error(err);cl
+                console.error(err);
+                cl
                 res.status(500).send('Error: ' + err);
             } else {
                 res.status(201).json(updatedUser);
@@ -216,8 +216,8 @@ app.use((err, res) => {
     res.status(500).send('Nope, try again...');
 });
 
- 
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => {
-  console.log('Running the show on ' + PORT + '!');
+    console.log('Running the show on ' + PORT + '!');
 });
