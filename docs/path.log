@@ -32,6 +32,6 @@ index.jsx is displayed in index.html
 5: create pull request in repository
 
 
-mongoimport --uri mongodb+srv://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB --collection Movies --type json --file Movies.json --jsonArray
-mongoimport --uri mongodb+srv://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB --collection Users --type json --file Users.json --jsonArray
+mongoimport --uri mongodb+srv://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB --collection movies --type json --file Movies.json --jsonArray
+mongoimport --uri mongodb+srv://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB --collection users --type json --file Users.json --jsonArray
 mongodb+srv://del:gniwled@myflixdb.qjwyf.mongodb.net/myFlixDB?retryWrites=true&w=majority
