@@ -50,17 +50,17 @@ app.use(cors({
 
 
 app.get('/', (req, res) => {
-    res.send('myFlix')
+    res.send('Welcome to myFlix')
 });
 
 
 // GET all movies
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies', (req, res) => {
     Movies.find().then((movies) => {
         res.status(201).json(movies);
     }).catch((err) => {
         console.error(err);
-        res.status(500).send("Error: " + err);
+        res.status(500).send("This is the new error message for:  " + err);
     });
 });
 
