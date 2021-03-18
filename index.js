@@ -26,7 +26,15 @@ app.use(bodyParser.json());
 require('./passport');
 
 let auth = require('./auth')(app);
- 
+
+
+
+/*mongoose.connect("mongodb://localhost:27017/faveFlixDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+*/
+
 
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
@@ -37,61 +45,43 @@ mongoose.connect(process.env.CONNECTION_URI, {
 let topTenMovies = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
 
-let allowedOrigins = [
-    'http://localhost:8080',
-    'http://localhost:1234',
-    'https://myflixdbs-z.herokuapp.com/movies'
-];
-
-app.use(cors({
-    origin: function(origin, callback) {
-        if (!origin)
-            return callback(null, true)
-        if (allowedOrigins.indexOf(origin) === -1) {
-            var message = 'The CORS policy for this application does not allow access from origin ' + origin;
-            return callback(new Error(message), false);
-        }
-        return callback(null, true);
-    }
-}));
-
 
 // GET requests
 app.get("/", (req, res) => {
-  res.send("Welcome to myFlix!");
+  res.send("Welcome to faveFlix!");
 });
 
 app.get("/movies/top", (req, res) => {
   res.json(topTenMovies);
 });
- 
-// GET all movies
-app.get('/movies', (req, res) => {
-    Movies.find().then((movies) => {
-        res.status(201).json(movies);
-    }).catch((err) => {
-        console.error(err);
-        res.status(500).send("This is the new error message for:  " + err);
+
+//Get a list of data about all movies
+app.get("/movies", passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
+  Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
     });
 });
 
-// GET Movie by Title
-app.get('/movies/:Title', (req, res) => {
-    Movies.findOne({ Title: req.params.Title }).then((movie) => {
-        res.status(201).json(movie)
-    }).catch((err) => {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-    });
-});
-
-// GET info about Director
-app.get('/movies/Directors/:Name', (req, res) => {
-    Movies.findOne({ "Director.Name": req.params.Name }).then((movie) => {
-        res.status(201).json(movie.Director.Name + ": " + movie.Director.Bio);
-    }).catch((err) => {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
+//Get data about a single movie, by title
+app.get("/movies/:Title", passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
+  Movies.findOne({
+      Title: req.params.Title,
+    })
+    .then((movie) => {
+      res.json(movie);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
     });
 });
 
@@ -109,7 +99,23 @@ app.get("/movies/:Title/genre", passport.authenticate('jwt', {
       console.error(err);
       res.status(500).send("Error: " + err);
     });
-}); 
+});
+
+// Get data about a director by name
+app.get("/movies/Director/:Name", passport.authenticate('jwt', {
+  session: false
+}), (req, res) => {
+  Movies.findOne({
+      "Director.Name": req.params.Name,
+    })
+    .then((movies) => {
+      res.json(movies.Director.Name + ": " + movies.Director.Bio);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
 
 // Post new users
 app.post("/users",
@@ -280,7 +286,7 @@ app.use((err, req, res, next) => {
 });
 
 // Listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log("Listening on PORT " + PORT);
+const port = process.env.PORT || 8080;
+app.listen(port, "0.0.0.0", () => {
+  console.log("Listening on Port " + port);
 });
