@@ -1,4 +1,5 @@
-const express = require("express"),
+const 
+  express = require("express"),
   morgan = require("morgan"),
   bodyParser = require('body-parser'),
   app = express(),
@@ -9,10 +10,7 @@ const express = require("express"),
   Users = Models.User,
   cors = require('cors');
 
-const {
-  check,
-  validationResult
-} = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
 
 app.use(cors());
@@ -26,7 +24,8 @@ app.use(bodyParser.json());
 require('./passport');
 
 let auth = require('./auth')(app);
- 
+
+
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -39,7 +38,7 @@ let topTenMovies = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
 // GET requests
 app.get("/", (req, res) => {
-  res.send("Welcome to faveFlix!");
+  res.send("Welcome to myFlix");
 });
 
 app.get("/movies/top", (req, res) => {
@@ -47,9 +46,7 @@ app.get("/movies/top", (req, res) => {
 });
 
 //Get a list of data about all movies
-app.get("/movies", passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+app.get("/movies", (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
