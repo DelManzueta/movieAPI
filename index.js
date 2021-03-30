@@ -66,7 +66,7 @@ app.get("/movies", passport.authenticate('jwt', { session: false }),
 });
 
 // GET Movie by Title
-app.get('/movies/:Title', passport.authenticate('jwt', { session: false }),
+app.get('/movies/:Title',
     (req, res) => {
     Movies.findOne({ Title: req.params.Title }).then((movie) => {
         res.status(201).json(movie)
@@ -76,7 +76,7 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }),
     });
 });
 
-app.get("/movies/:Title/genre", passport.authenticate('jwt', {
+app.get("/movies/:Title/genre" {
     session: false
   }), (req, res) => {
     Movies.findOne({
