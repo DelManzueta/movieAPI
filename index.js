@@ -4,8 +4,8 @@ const express = require("express"),
   mongoose = require("mongoose"),
   Models = require("./models.js");
 
-const Movies = Models.Movie,
-  Users = Models.User;
+const Movies = Models.Movie;
+const Users = Models.User;
 
 // mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI, {
@@ -28,36 +28,51 @@ const auth = require("./auth")(app);
 const passport = require("passport");
 require("./passport");
 
+//
 const { check, validationResult } = require("express-validator");
+//
 
-//Top Movies
-let topTenMovies = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+let allowedOrigins = [
+  "http://localhost:8080",
+  "http://localhost:1234",
+  "https://myflixdbs-z.herokuapp.com/movies",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        var message =
+          "The CORS policy for this application does not allow access from origin " +
+          origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
+
+app.use('/client', express.static(path.join(__dirname, 'client', 'dist')));
+app.get('/client/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
 
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix");
 });
 
 // GET all movies
-app.get(
-  "/movies",
-  passport.authenticate("jwt", {
-    session: false,
-  }),
-  (res) => {
-    Movies.find()
-      .then((movies) => {
-        res.status(201).json(movies);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send("This is the new error message for:  " + err);
+app.get('/movies', passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Movies.find({})
+      .populate('Director')
+      .populate('Genre')
+      .exec((err, movie) => {
+        if (err) return console.error(err);
+        res.status(201).json(movie)
       });
-  }
-);
-
-app.get("/movies/top", (res) => {
-  res.json(topTenMovies);
-});
+  });
 
 // GET Movie by Title
 app.get("/movies/:Title", (req, res) => {
