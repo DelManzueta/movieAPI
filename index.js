@@ -56,11 +56,6 @@ app.use(
   })
 );
 
-app.use('/client', express.static(path.join(__dirname, 'client', 'dist')));
-app.get('/client/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-});
-
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix");
 });
