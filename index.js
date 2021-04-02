@@ -29,13 +29,16 @@ const passport = require("passport");
 require("./passport");
 
 //
-const { check, validationResult } = require("express-validator");
+const {
+  check,
+  validationResult
+} = require("express-validator");
 //
 
 let allowedOrigins = [
   "http://localhost:8080",
   "http://localhost:1234",
-  "https://myflixdbs-z.herokuapp.com/movies",
+  "https://myflixdbs-z.herokuapp.com",
 ];
 
 app.use(
@@ -63,7 +66,9 @@ app.get("/", (req, res) => {
 });
 
 // GET all movies
-app.get('/movies', passport.authenticate('jwt', { session: false }),
+app.get('/movies', passport.authenticate('jwt', {
+    session: false
+  }),
   (req, res) => {
     Movies.find({})
       .populate('Director')
@@ -77,8 +82,8 @@ app.get('/movies', passport.authenticate('jwt', { session: false }),
 // GET Movie by Title
 app.get("/movies/:Title", (req, res) => {
   Movies.findOne({
-    Title: req.params.Title,
-  })
+      Title: req.params.Title,
+    })
     .then((movie) => {
       res.status(201).json(movie);
     })
@@ -95,8 +100,8 @@ app.get(
   }),
   (req, res) => {
     Movies.findOne({
-      Title: req.params.Title,
-    })
+        Title: req.params.Title,
+      })
       .then((movie) => {
         res
           .status(201)
@@ -117,8 +122,8 @@ app.get(
   }),
   (req, res) => {
     Movies.findOne({
-      "Director.Name": req.params.Name,
-    })
+        "Director.Name": req.params.Name,
+      })
       .then((movies) => {
         res.json(movies.Director.Name + ": " + movies.Director.Bio);
       })
@@ -155,8 +160,8 @@ app.get(
   }),
   (req, res) => {
     Users.findOne({
-      Username: req.params.Username,
-    })
+        Username: req.params.Username,
+      })
       .then((user) => {
         res.json(user);
       })
@@ -191,18 +196,18 @@ app.post(
 
     let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({
-      Username: req.body.Username,
-    })
+        Username: req.body.Username,
+      })
       .then((user) => {
         if (user) {
           return res.status(400).send(req.body.Username + " already exists");
         } else {
           Users.create({
-            Username: req.body.Username,
-            Password: hashedPassword,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday,
-          })
+              Username: req.body.Username,
+              Password: hashedPassword,
+              Email: req.body.Email,
+              Birthday: req.body.Birthday,
+            })
             .then((user) => {
               res.status(201).json(user);
             })
@@ -227,19 +232,16 @@ app.put(
   }),
   (req, res) => {
     let hashedPassword = Users.hashPassword(req.body.Password);
-    Users.findOneAndUpdate(
-      {
+    Users.findOneAndUpdate({
         Username: req.params.Username,
-      },
-      {
+      }, {
         $set: {
           Username: req.body.Username,
           Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         },
-      },
-      {
+      }, {
         new: true,
       },
       (err, updatedUser) => {
@@ -261,16 +263,13 @@ app.post(
     session: false,
   }),
   (req, res) => {
-    Users.findOneAndUpdate(
-      {
+    Users.findOneAndUpdate({
         Username: req.params.Username,
-      },
-      {
+      }, {
         $push: {
           FavoriteMovies: req.params.MovieID,
         },
-      },
-      {
+      }, {
         new: true,
       },
       (err, updatedUser) => {
@@ -294,8 +293,8 @@ app.delete(
   }),
   (req, res) => {
     Users.findOneAndRemove({
-      Username: req.params.Username,
-    })
+        Username: req.params.Username,
+      })
       .then((user) => {
         if (!user) {
           res.status(400).send(req.params.Username + " was not found");
@@ -317,16 +316,13 @@ app.delete(
     session: false,
   }),
   (req, res) => {
-    Users.findOneAndUpdate(
-      {
+    Users.findOneAndUpdate({
         Username: req.params.Username,
-      },
-      {
+      }, {
         $pull: {
           FavoriteMovies: req.params.MovieID,
         },
-      },
-      {
+      }, {
         new: true,
       },
       (error, updatedUser) => {
