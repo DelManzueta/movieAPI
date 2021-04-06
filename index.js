@@ -31,7 +31,7 @@ let topTenMovies = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 
 // GET requests
 app.get('/', (req, res) => {
-  res.send('Welcome to faveFlix!')
+  res.send('Welcome to myFlix Movies')
 })
 
 app.get('/movies/top', (req, res) => {
