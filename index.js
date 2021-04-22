@@ -289,10 +289,10 @@ app.delete(
 
 app.use((err, req, res, next) => {
   console.error(err.stack)
-  res.status(500).send('Something made an Uh-Oh!')
+  res.status(500).send('Something\'s Wrong')
 })
 
 const port = process.env.PORT || 8080
 app.listen(port, '0.0.0.0', () => {
-  console.log('All Ears on Port ' + port + '!')
+  console.log('Listening on ' + port + '!')
 })
