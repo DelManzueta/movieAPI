@@ -30,7 +30,8 @@ auth = require('./auth')(app)
 let allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:1234',
-  'https://myflixdbs-z.herokuapp.com'
+  'https://myflixdbs-z.herokuapp.com',
+  'https://myflix-del.netlify.app'
 ]
 app.use(
   cors({
